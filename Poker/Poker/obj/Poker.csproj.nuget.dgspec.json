@@ -1,24 +1,26 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\jon\\Source\\Repos\\final-project-ryanfuru\\Poker\\Poker\\Poker.csproj": {}
+    "C:\\Users\\Ajay\\Source\\Repos\\final-project-ryanfuru\\Poker\\Poker\\Poker.csproj": {}
   },
   "projects": {
-    "C:\\Users\\jon\\Source\\Repos\\final-project-ryanfuru\\Poker\\Poker\\Poker.csproj": {
+    "C:\\Users\\Ajay\\Source\\Repos\\final-project-ryanfuru\\Poker\\Poker\\Poker.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\jon\\Source\\Repos\\final-project-ryanfuru\\Poker\\Poker\\Poker.csproj",
+        "projectUniqueName": "C:\\Users\\Ajay\\Source\\Repos\\final-project-ryanfuru\\Poker\\Poker\\Poker.csproj",
         "projectName": "Poker",
-        "projectPath": "C:\\Users\\jon\\Source\\Repos\\final-project-ryanfuru\\Poker\\Poker\\Poker.csproj",
-        "packagesPath": "C:\\Users\\jon\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\jon\\Source\\Repos\\final-project-ryanfuru\\Poker\\Poker\\obj\\",
+        "projectPath": "C:\\Users\\Ajay\\Source\\Repos\\final-project-ryanfuru\\Poker\\Poker\\Poker.csproj",
+        "packagesPath": "C:\\Users\\Ajay\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Ajay\\Source\\Repos\\final-project-ryanfuru\\Poker\\Poker\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
+          "C:\\Microsoft\\Xamarin\\NuGet\\",
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\jon\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\Ajay\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
@@ -29,6 +31,7 @@
         },
         "frameworks": {
           "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
             "projectReferences": {}
           }
         },
@@ -40,6 +43,7 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
           "dependencies": {
             "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
               "target": "Package",
@@ -86,7 +90,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.401\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     }
