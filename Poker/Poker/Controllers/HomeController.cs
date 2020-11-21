@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Poker.Models;
-
+/// <summary>
+/// 
+/// </summary>
 namespace Poker.Controllers
 {
     public class HomeController : Controller
