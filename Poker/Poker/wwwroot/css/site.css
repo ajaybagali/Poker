@@ -75,3 +75,9 @@ body {
     background-attachment: fixed;
     background-size: cover;
 }
+
+.canvas_div{
+   position:absolute;
+   top: 100px;
+   left: 35px;
+}

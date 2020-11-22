@@ -4,25 +4,29 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+@*<div>
+    <a asp-action="Index">Back to Main Menu</a>
+</div>*@
 
-<h4>Game</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
+ <div class ="canvas_div" id="canvas_div"></div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/5.1.5/pixi.js"></script>
+    <script src="https://pixijs.io/pixi-sound/dist/pixi-sound.js"></script>
+    <script type="text/javascript" src="~/js/game.js"></script>
+
+    <script type="text/javascript">
+
+        $(function () {
+            var game = new Game();
+            var betButton = new betButton();
+            game.setup_pixi_stage(1550, 800, 0x66CC00);
+            
+
+        });
+
+    </script>
 }
