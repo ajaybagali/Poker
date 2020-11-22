@@ -1,0 +1,41 @@
+﻿@model Poker.Models.Game
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Lobby</h1>
+
+<h4>Game</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <p>
+            Game Code:
+        </p>
+        <p>@Model.ID</p>
+        <p>@Model.Player1.Id</p>
+
+        @if (Model.Player2 != null)
+        {
+            <p>@Model.Player2.Id</p>
+        }
+
+        @if (Model.Player3 != null)
+        {
+            <p>@Model.Player3.Id</p>
+        }
+        @if (Model.Player4 != null)
+        {
+            <p>@Model.Player4.Id</p>
+        }
+    </div>
+</div>
+
+<div>
+    <a class="btn btn-primary btn-lg" href="/Games/Play/@Model.ID" id="startbutton" role="button">Start Game</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

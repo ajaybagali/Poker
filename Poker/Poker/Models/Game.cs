@@ -1,4 +1,5 @@
-﻿using Poker.Areas.Identity.Data;
+﻿using Microsoft.AspNetCore.Identity;
+using Poker.Areas.Identity.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +10,15 @@ namespace Poker.Models
     public class Game
     {
         public int ID { get; set; }
-        public PokerUser Player1;
-        public PokerUser Player2;
-        public PokerUser Player3;
-        public PokerUser Player4;
-        public PokerUser Winner;
+        [PersonalData]
+        public PokerUser Player1 { get; set; }
+        [PersonalData]
+        public PokerUser Player2 { get; set; }
+        [PersonalData]
+        public PokerUser Player3 { get; set; }
+        [PersonalData]
+        public PokerUser Player4 { get; set; }
+        [PersonalData]
+        public PokerUser Winner { get; set; }
     }
 }

@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Poker.Areas.Identity.Data;
 using Poker.Data;
 using Poker.Models;
 
@@ -13,10 +17,12 @@ namespace Poker.Controllers
     public class GamesController : Controller
     {
         private readonly GameContext _context;
+        private readonly UserManager<PokerUser> _userManager;
 
-        public GamesController(GameContext context)
+        public GamesController(GameContext context, UserManager<PokerUser> userContext)
         {
             _context = context;
+            _userManager = userContext;
         }
 
         // GET: Games
@@ -44,7 +50,82 @@ namespace Poker.Controllers
         }
 
         // GET: Games/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
+        {
+            Game g = new Game();
+
+            PokerUser curUser = await _userManager.GetUserAsync(User);
+            g.Player1 = curUser;
+
+            _context.Add(g);
+            await _context.SaveChangesAsync();
+
+            return View("Lobby", g);
+        }
+
+        /// <summary>
+        /// udpates user roles when something changes from admin grid 
+        /// </summary>
+        /// <param name="user_id"></param>
+        /// <param name="user_role"></param>
+        /// <returns></returns>
+        [Authorize]
+        public async Task<IActionResult> Join(int? id)
+        {
+            PokerUser curUser = await _userManager.GetUserAsync(User);
+            Game g = await _context.Game
+                .Include(g => g.Player1)
+                .Include(g => g.Player2)
+                .Include(g => g.Player3)
+                .Include(g => g.Player4).Where(g => g.ID == id).SingleOrDefaultAsync();
+
+            if (g == null)
+            {
+                // return bad game code to user
+                NotFound();
+            }
+            else if (g.Player1 == null)
+            {
+                    g.Player1 = curUser;
+            }
+            else if (g.Player2 == null)
+            {
+                if (g.Player1.Id != curUser.Id)
+                {
+                g.Player2 = curUser;
+                }
+            }
+            else if (g.Player3 == null)
+            {
+                if (g.Player2.Id != curUser.Id && g.Player1.Id != curUser.Id)
+                {
+                    g.Player3 = curUser;
+                }
+            }
+            else if (g.Player4 == null)
+            {
+                if (g.Player3.Id != curUser.Id && g.Player2.Id != curUser.Id && g.Player1.Id != curUser.Id)
+                {
+                    g.Player4 = curUser;
+                }
+            }
+            else
+            {
+                //bad, inform user lobby is full
+                return NotFound();
+            }
+            _context.Update(g);
+            await _context.SaveChangesAsync();
+
+            return View("Lobby", g);
+        }
+
+        public IActionResult Play(int? id)
+        {
+            return View();
+        }
+
+        public IActionResult Lobby()
         {
             return View();
         }
@@ -65,85 +146,6 @@ namespace Poker.Controllers
             return View(game);
         }
 
-        // GET: Games/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var game = await _context.Game.FindAsync(id);
-            if (game == null)
-            {
-                return NotFound();
-            }
-            return View(game);
-        }
-
-        // POST: Games/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID")] Game game)
-        {
-            if (id != game.ID)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(game);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!GameExists(game.ID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(game);
-        }
-
-        // GET: Games/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var game = await _context.Game
-                .FirstOrDefaultAsync(m => m.ID == id);
-            if (game == null)
-            {
-                return NotFound();
-            }
-
-            return View(game);
-        }
-
-        // POST: Games/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var game = await _context.Game.FindAsync(id);
-            _context.Game.Remove(game);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
 
         private bool GameExists(int id)
         {
