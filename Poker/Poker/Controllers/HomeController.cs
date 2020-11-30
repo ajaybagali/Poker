@@ -3,18 +3,23 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Poker.Areas.Identity.Data;
 using Poker.Models;
 namespace Poker.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly UserManager<PokerUser> _userManager;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, UserManager<PokerUser> userContext)
         {
             _logger = logger;
+            _userManager = userContext;
         }
 
         public IActionResult Index()
@@ -22,9 +27,11 @@ namespace Poker.Controllers
             return View();
         }
 
-        public IActionResult Stats()
+        [Authorize]
+        public async Task<IActionResult> Stats()
         {
-            return View();
+            PokerUser user = await _userManager.GetUserAsync(User);
+            return View(user);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
