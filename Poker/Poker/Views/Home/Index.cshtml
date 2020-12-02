@@ -3,15 +3,14 @@
 }
 
 <body class="background">
-    <div class="jumbotron">
+    <div class="Header">
         <h1 class="display-4">Welcome to Poker</h1>
         <p class="lead">Chill Time Poker Game</p>
-        <hr class="my-4">
-        <p class="lead">
-            <a class="btn btn-primary btn-lg" asp-controller="Games" asp-action="Create" role="button">Start Game</a>
-            <a class="btn btn-primary btn-lg" id="joinbox" role="button">Join Game</a>
-           <input class="form-control" type="text" id="gameIdInput">
-        </p>
+        <a class="btn btn-primary btn-lg" style="background-color: #d12d36" asp-controller="Games" asp-action="Create" role="button">Start Game</a>
+        <h3> OR </h3>
+        <p class="homeElement"> Enter the game code to join another game! </p>
+        <input class="form-control" type="text" id="gameIdInput" style="width: 126px">
+        <a class="btn btn-primary btn-lg" style="background-color: #d12d36" id="joinbox" role="button">Join Game</a>
     </div>
 </body>
 

@@ -50,6 +50,7 @@ namespace Poker.Controllers
         }
 
         // GET: Games/Create
+        [Authorize]
         public async Task<IActionResult> Create()
         {
             Game g = new Game();
@@ -120,9 +121,15 @@ namespace Poker.Controllers
             return View("Lobby", g);
         }
 
-        public IActionResult Play(int? id)
+        public async Task<IActionResult> Play(int? id)
         {
-            return View();
+            Game g = await _context.Game
+                .Include(g => g.Player1)
+                .Include(g => g.Player2)
+                .Include(g => g.Player3)
+                .Include(g => g.Player4).Where(g => g.ID == id).SingleOrDefaultAsync();
+
+            return View(g);
         }
 
         public IActionResult Lobby()
