@@ -53,15 +53,15 @@ namespace Poker.Controllers
         [Authorize]
         public async Task<IActionResult> Create()
         {
-            Game g = new Game();
-
             PokerUser curUser = await _userManager.GetUserAsync(User);
-            g.Player1 = curUser;
+            Game g = new Game();
+            Player player = new Player(g, curUser.UserName, 0);
 
             _context.Add(g);
+            _context.Add(player);
             await _context.SaveChangesAsync();
 
-            return View("Lobby", g);
+            return Redirect("~/Games/Lobby/" + g.ID.ToString());
         }
 
         /// <summary>
@@ -75,66 +75,51 @@ namespace Poker.Controllers
         {
             PokerUser curUser = await _userManager.GetUserAsync(User);
             Game g = await _context.Game
-                .Include(g => g.Player1)
-                .Include(g => g.Player2)
-                .Include(g => g.Player3)
-                .Include(g => g.Player4).Where(g => g.ID == id).SingleOrDefaultAsync();
+                .Include(g => g.Players).Where(g => g.ID == id).SingleOrDefaultAsync();
 
-            if (g == null)
+            int curPlayers = g.Players.Count;
+
+            if (curPlayers > 4)
             {
-                // return bad game code to user
-                NotFound();
-            }
-            else if (g.Player1 == null)
-            {
-                    g.Player1 = curUser;
-            }
-            else if (g.Player2 == null)
-            {
-                if (g.Player1.Id != curUser.Id)
-                {
-                g.Player2 = curUser;
-                }
-            }
-            else if (g.Player3 == null)
-            {
-                if (g.Player2.Id != curUser.Id && g.Player1.Id != curUser.Id)
-                {
-                    g.Player3 = curUser;
-                }
-            }
-            else if (g.Player4 == null)
-            {
-                if (g.Player3.Id != curUser.Id && g.Player2.Id != curUser.Id && g.Player1.Id != curUser.Id)
-                {
-                    g.Player4 = curUser;
-                }
-            }
-            else
-            {
-                //bad, inform user lobby is full
                 return NotFound();
             }
-            _context.Update(g);
+
+            foreach(Player p in g.Players)
+            {
+                if (curUser.UserName.Equals(p.UserName)) return View("Lobby", g);
+            }
+
+            Player player = new Player(g, curUser.UserName, curPlayers);
+
+            _context.Add(player);
             await _context.SaveChangesAsync();
 
-            return View("Lobby", g);
+            return Redirect("~/Games/Lobby/" + g.ID.ToString());
         }
 
         public async Task<IActionResult> Play(int? id)
         {
             Game g = await _context.Game
-                .Include(g => g.Player1)
-                .Include(g => g.Player2)
-                .Include(g => g.Player3)
-                .Include(g => g.Player4).Where(g => g.ID == id).SingleOrDefaultAsync();
+                .Include(g => g.Players).Where(g => g.ID == id).SingleOrDefaultAsync();
+
+            if (g.Turn == -1)
+            {
+                g.StartGame(_context);
+             //   _context.Update(g);
+             //   await _context.SaveChangesAsync();
+            }
 
             return View(g);
         }
 
-        public IActionResult Lobby()
+        public async Task<IActionResult> Lobby(int? id)
         {
-            return View();
+            Game g = await _context.Game
+                .Include(g => g.Players).Where(g => g.ID == id).SingleOrDefaultAsync();
+
+            if (g.Turn != -1) return Redirect("~/Games/Play/" + g.ID.ToString());
+
+            return View("Lobby", g);
         }
 
         // POST: Games/Create
@@ -154,9 +139,68 @@ namespace Poker.Controllers
         }
 
 
-        private bool GameExists(int id)
+        [HttpPost]
+        public async Task<IActionResult> Bet(int id, int amount)
         {
-            return _context.Game.Any(e => e.ID == id);
+            PokerUser user = await _userManager.GetUserAsync(User);
+            Game game = await _context.Game
+                .Include(g => g.Players).Where(g => g.ID == id).SingleOrDefaultAsync();
+
+            // Verify that the game exists and is in progress
+            if (game == null) return Json("Game not found");
+            else if (game.Winner != null) return Json("Game is over");
+            else if (game.Turn == -1) return Json("Game not started");
+
+            // Verify that it's the requesting user's turn
+            Player curPlayer;
+            try
+            {
+                curPlayer = game.ValidateUser(user.UserName);
+            } catch (Exception e)
+            {
+                return Json(e.Message);
+            }
+
+            // Validate bet amount --- UI Shouldn't allow these to be hit
+            if (amount > curPlayer.Chips + curPlayer.CurrentBet)
+            {
+                return Json("Not enough chips");
+            } else if (amount % 10 != 0)
+            {
+                return Json("Invalid bet amount");
+            }
+
+            // If bet amount is less than minimum, the player folds
+            if (amount < game.MinimumBet)
+            {
+                curPlayer.Folded = true;
+            }
+            else
+            {
+                curPlayer.Chips += curPlayer.CurrentBet - amount;
+                game.Pot += amount - curPlayer.CurrentBet;
+                curPlayer.CurrentBet = amount;
+                game.MinimumBet = amount;
+
+                _context.Update(game);
+            }
+            _context.Update(curPlayer);
+            await _context.SaveChangesAsync();
+
+            // If end of round, flip card
+            if (game.Turn == game.Dealer)  { }
+            // If all cards flipped, end hand
+                // score all players' hands
+                // give pot to non-folded player with highest score, record hand win for user
+                // record bluff win if player without highest score wins pot
+                // if one player has all the money, end the game
+                    // record game win for user
+                // else
+                    game.StartHand(_context);
+            // Else
+                game.NextTurn(_context);
+
+            return Json(game);
         }
     }
 }

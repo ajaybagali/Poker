@@ -14,20 +14,8 @@
             Game Code:
         </p>
         <p>@Model.ID</p>
-        <p>@Model.Player1.Id</p>
-
-        @if (Model.Player2 != null)
-        {
-            <p>@Model.Player2.Id</p>
-        }
-
-        @if (Model.Player3 != null)
-        {
-            <p>@Model.Player3.Id</p>
-        }
-        @if (Model.Player4 != null)
-        {
-            <p>@Model.Player4.Id</p>
+        @foreach (Player player in Model.Players) { 
+            <p>@player.UserName</p>
         }
     </div>
 </div>
