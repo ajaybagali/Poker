@@ -5,24 +5,27 @@
 }
 
 <h1>Lobby</h1>
-
-<h4>Game</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <p>
-            Game Code:
-        </p>
-        <p>@Model.ID</p>
-        @foreach (Player player in Model.Players) { 
-            <p>@player.UserName</p>
-        }
+<body>
+    <h4>Game</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <p>
+                Game Code:
+            </p>
+            <p id="gameid">@Model.ID</p>
+            <p id="gameresponse"></p>
+        </div>
     </div>
-</div>
 
-<div>
-    <a class="btn btn-primary btn-lg" href="/Games/Play/@Model.ID" id="startbutton" role="button">Start Game</a>
-</div>
+    
+
+    <div>
+        <a class="btn btn-primary btn-lg" href="/Games/Play/@Model.ID" id="startbutton" role="button">Start Game</a>
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/lobby.js"></script>
+</body>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

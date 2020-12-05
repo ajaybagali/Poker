@@ -202,5 +202,22 @@ namespace Poker.Controllers
 
             return Json(game);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Data(int id)
+        {
+            PokerUser user = await _userManager.GetUserAsync(User);
+            Game game = await _context.Game
+                .Include(g => g.Players).Where(g => g.ID == id).SingleOrDefaultAsync();
+            try
+            {
+                game.VerifyPlayer(user.UserName);
+            } catch (Exception e)
+            {
+                return Json(e.Message);
+            }
+
+            return Json(game.GetJson());
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Poker.Areas.Identity.Data;
 using Poker.Data;
 using System;
@@ -31,6 +32,41 @@ namespace Poker.Models
             MinimumBet = 0;
         }
 
+        public dynamic GetJson()
+        {
+            List<dynamic> players = new List<dynamic>();
+            foreach (Player p in Players)
+            {
+                players.Add(new
+                {
+                    id = p.ID,
+                    username = p.UserName,
+                    chips = p.Chips,
+                    folded = p.Folded,
+                    card1 = p.Card1,
+                    card2 = p.Card2,
+                    order = p.Order,
+                    currentBet = p.CurrentBet,
+                });
+            }
+            dynamic result = new
+            {
+                id = ID,
+                winner = Winner,
+                turn = Turn,
+                dealer = Dealer,
+                river1 = River1,
+                river2 = River2,
+                river3 = River3,
+                river4 = River4,
+                river5 = River5,
+                minimumBet = MinimumBet,
+                pot = Pot,
+                players = players,
+            };
+            return result;
+        }
+
         public Player ValidateUser(String player)
         {
             foreach(Player p in Players)
@@ -45,6 +81,16 @@ namespace Poker.Models
                     throw new Exception("It's not your turn");
                 }
             }
+            throw new Exception("User not in game");
+        }
+
+        public void VerifyPlayer(string username)
+        {
+            foreach(Player p in Players)
+            {
+                if (p.UserName.Equals(username)) return;
+            }
+
             throw new Exception("User not in game");
         }
 
@@ -117,6 +163,7 @@ namespace Poker.Models
             }
             return false;
         }
+
     }
 
 /*    public enum Cards { 
