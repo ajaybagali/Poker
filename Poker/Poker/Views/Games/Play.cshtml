@@ -4,7 +4,7 @@
     ViewData["Title"] = "Game";
 }
 
-<div class="input-group" style="position:absolute; left: 35px; top: 7%;">
+<div class="input-group" style="float: left;">
     <input class="form-control" type="number" value="50" min="0" max="8000" step="10" style="max-width:150px;" id="betAmount" />
     <div class="input-group-append" id="button-addon4">
         <button class="btn btn-outline-primary" type="button" style="background-color:green; color:white;" id="betButton">Bet</button>
@@ -12,7 +12,7 @@
         <button class="btn btn-outline-secondary" type="button" style="background-color:red; color:white;" id=foldButton>Fold</button>
     </div>
 </div>
-<body style="overflow-x:hidden; overflow-y:hidden">
+<body style="padding-left:0px; margin-left:0px; float:left;">
     <div class="game_background" id="game_background"></div>
 </body>
 
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="~/js/button.js"></script>
     <script type="text/javascript" src="~/js/setup.js"></script>
     <script type="text/javascript" src="~/js/game_board.js"></script>
-    <script type="text/javascript" src = "~/js/card_images.js"></script>
+    <script type="text/javascript" src="~/js/card_images.js"></script>
 
     <script type="text/javascript">
 

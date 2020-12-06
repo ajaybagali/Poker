@@ -11,8 +11,12 @@
  */
 class Game {
 
+     pot_exists; 
 
     constructor() {
+
+    this.pot_exists = false;
+
     }
 
     /**
@@ -56,63 +60,8 @@ class Game {
         pot_text.y = 400;
         pot_text.style.fontSize = 20;
         app.stage.addChild(pot_text);
-
-        this.add_game_buttons();
     }
 
-    add_game_buttons() {
-        this.add_fold_button();
-        this.add_call_button();
-        this.add_bet_button();
-    }
-
-    add_fold_button() {
-        let fold_button = new Button({
-            bg_color: 0xFFFFFF,
-            outline_color: 0x000000,
-            text: "Fold"
-        });
-
-        fold_button.scale.x = 1.2;
-        fold_button.scale.y = 1.2;
-        fold_button.x = 250;
-        fold_button.y = 740;
-
-        app.stage.addChild(fold_button);
-
-    }
-
-    add_call_button() {
-        let call_button = new Button({
-            bg_color: 0xFFFFFF,
-            outline_color: 0x000000,
-            text: "Call"
-        });
-
-        call_button.scale.x = 1.2;
-        call_button.scale.y = 1.2;
-        call_button.x = 550;
-        call_button.y = 740;
-
-        app.stage.addChild(call_button);
-
-    }
-
-    add_bet_button() {
-        let bet_button = new Button({
-            bg_color: 0xFFFFFF,
-            outline_color: 0x000000,
-            text: "Bet"
-        });
-
-        bet_button.scale.x = 1.2;
-        bet_button.scale.y = 1.2;
-        bet_button.x = 850;
-        bet_button.y = 740;
-
-        app.stage.addChild(bet_button);
-
-    }
 
     draw_river_cards(river1, river2, river3, river4, river5)
     {
@@ -164,20 +113,26 @@ class Game {
 
     draw_pot(potVal)
     {
-
+        if (this.pot_exists) {
+            app.stage.removeChild(potAmount);
+        }
+ 
         let potAmount = new PIXI.Text('$' + potVal);
         potAmount.x = 770;
         potAmount.y = 445;
         potAmount.style.fontSize = 20;
         app.stage.addChild(potAmount);
+
+        this.pot_exists = true;
     }
+
 
     draw_players(players) {
 
         var counter = 0;
 
         players.forEach(element => {
-            if (counter == 0) {
+            if (element.order == 0) {
             
                 var  username = element.username.split('@')[0];
                 var chips = element.chips;
@@ -216,7 +171,7 @@ class Game {
 
                 counter++;
             }
-            else if (counter == 1) {
+            else if (element.order == 1) {
                 var username = element.username.split('@')[0];
                 var chips = element.chips;
 
@@ -228,7 +183,7 @@ class Game {
                 app.stage.addChild(bubble);
 
                 let playername = new PIXI.Text(username);
-                playername.x = 70;
+                playername.x = 60;
                 playername.y = 270;
                 playername.style.fontSize = 20;
                 app.stage.addChild(playername);
@@ -255,7 +210,7 @@ class Game {
                 counter++;
 
             }
-            else if (counter == 2) {
+            else if (element.order == 2) {
                 var username = element.username.split('@')[0];
                 var chips = element.chips;
 
