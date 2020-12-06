@@ -128,13 +128,34 @@ class Game {
         players.forEach(element => {
             if (element.order == 0) {
 
-                if (element.order == turn) {
+                if (element.order == turn)
+                {
+                    //redraw over 
+                    indicator2 = new PIXI.Graphics();
+                    indicator2.lineStyle(3, 0x009900);
+                    indicator2.drawCircle(90, 300, 80);
+                    indicator2.endFill();
+                    app.stage.addChild(indicator2);
+
+
+                    indicator3 = new PIXI.Graphics();
+                    indicator3.lineStyle(3, 0x009900);
+                    indicator3.drawCircle(750, 100, 80);
+                    indicator3.endFill();
+                    app.stage.addChild(indicator3);
+
+
+                    indicator4 = new PIXI.Graphics();
+                    indicator4.lineStyle(3, 0x009900);
+                    indicator4.drawCircle(1450, 300, 80);
+                    indicator4.endFill();
+                    app.stage.addChild(indicator4);
 
 
                     indicator1 = new PIXI.Graphics();
-                    indicator2.lineStyle(3, 0xffffff);
-                    indicator3.drawCircle(750, 620, 80);
-                    indicator4.endFill();
+                    indicator1.lineStyle(3, 0xffffff);
+                    indicator1.drawCircle(750, 620, 80);
+                    indicator1.endFill();
                     app.stage.addChild(indicator1);
 
                 }
@@ -179,11 +200,32 @@ class Game {
 
                 if (element.order == turn) {
 
+                    //redraw over 
                     indicator1 = new PIXI.Graphics();
-                    indicator2.lineStyle(3, 0xffffff);
-                    indicator3.drawCircle(750, 620, 80);
-                    indicator4.endFill();
+                    indicator1.lineStyle(3, 0x009900);
+                    indicator1.drawCircle(750, 620, 80);
+                    indicator1.endFill();
                     app.stage.addChild(indicator1);
+
+
+                    indicator3 = new PIXI.Graphics();
+                    indicator3.lineStyle(3, 0x009900);
+                    indicator3.drawCircle(750, 100, 80);
+                    indicator3.endFill();
+                    app.stage.addChild(indicator3);
+
+
+                    indicator4 = new PIXI.Graphics();
+                    indicator4.lineStyle(3, 0x009900);
+                    indicator4.drawCircle(1450, 300, 80);
+                    indicator4.endFill();
+                    app.stage.addChild(indicator4);
+
+                    indicator2 = new PIXI.Graphics();
+                    indicator2.lineStyle(3, 0xffffff);
+                    indicator2.drawCircle(90, 300, 80);
+                    indicator2.endFill();
+                    app.stage.addChild(indicator2);
 
                 }
                 var username = element.username.split('@')[0];
@@ -224,6 +266,38 @@ class Game {
 
             }
             else if (element.order == 2) {
+
+                if (element.order == turn) {
+
+                    //redraw over 
+                    indicator2 = new PIXI.Graphics();
+                    indicator2.lineStyle(3, 0x009900);
+                    indicator2.drawCircle(90, 300, 80);
+                    indicator2.endFill();
+                    app.stage.addChild(indicator2);
+
+
+                    indicator1 = new PIXI.Graphics();
+                    indicator1.lineStyle(3, 0x009900);
+                    indicator1.drawCircle(750, 620, 80);
+                    indicator1.endFill();
+                    app.stage.addChild(indicator1);
+
+
+                    indicator4 = new PIXI.Graphics();
+                    indicator4.lineStyle(3, 0x009900);
+                    indicator4.drawCircle(1450, 300, 80);
+                    indicator4.endFill();
+                    app.stage.addChild(indicator4);
+
+                    indicator3 = new PIXI.Graphics();
+                    indicator3.lineStyle(3, 0xffffff);
+                    indicator3.drawCircle(750, 100, 80);
+                    indicator3.endFill();
+                    app.stage.addChild(indicator3);
+
+                }
+
                 var username = element.username.split('@')[0];
                 var chips = element.chips;
 
@@ -263,6 +337,37 @@ class Game {
             else {
                 var username = element.username.split('@')[0];
                 var chips = element.chips;
+
+                if (element.order == turn) {
+
+                    //redraw over 
+                    indicator2 = new PIXI.Graphics();
+                    indicator2.lineStyle(3, 0x009900);
+                    indicator2.drawCircle(90, 300, 80);
+                    indicator2.endFill();
+                    app.stage.addChild(indicator2);
+
+
+                    indicator3 = new PIXI.Graphics();
+                    indicator3.lineStyle(3, 0x009900);
+                    indicator3.drawCircle(750, 100, 80);
+                    indicator3.endFill();
+                    app.stage.addChild(indicator3);
+
+
+                    indicator1 = new PIXI.Graphics();
+                    indicator1.lineStyle(3, 0x009900);
+                    indicator1.drawCircle(750, 620, 80);
+                    indicator1.endFill();
+                    app.stage.addChild(indicator1);
+
+                    indicator4 = new PIXI.Graphics();
+                    indicator4.lineStyle(3, 0xffffff);
+                    indicator4.drawCircle(1450, 300, 80);
+                    indicator4.endFill();
+                    app.stage.addChild(indicator4);
+
+                }
 
                 const bubble = new PIXI.Graphics();
                 bubble.beginFill(0xffcccb);
