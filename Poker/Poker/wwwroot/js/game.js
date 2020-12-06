@@ -46,20 +46,6 @@ class Game {
         pot_image.scale.x = .25;
         pot_image.scale.y = .25;
         app.stage.addChild(pot_image);
-
-        //gold box
-        const pot = new PIXI.Graphics();
-        pot.beginFill(0xFFD700);
-        pot.drawRect(760, 430, 100, 40);
-        pot.endFill();
-        app.stage.addChild(pot);
-
-        //gold pot text
-        let pot_text = new PIXI.Text('POT', { fill: "0xFFD700"});
-        pot_text.x = 780;
-        pot_text.y = 400;
-        pot_text.style.fontSize = 20;
-        app.stage.addChild(pot_text);
     }
 
 
@@ -127,12 +113,26 @@ class Game {
     }
 
 
-    draw_players(players) {
+    draw_players(players, turn) {
 
-        var counter = 0;
+        var indicator1;
+        var indicator2;
+        var indicator3;
+        var indicator4;
 
         players.forEach(element => {
             if (element.order == 0) {
+
+                if (element.order == turn) {
+
+
+                    indicator1 = new PIXI.Graphics();
+                    indicator2.lineStyle(3, 0xffffff);
+                    indicator3.drawCircle(750, 620, 80);
+                    indicator4.endFill();
+                    app.stage.addChild(indicator1);
+
+                }
             
                 var  username = element.username.split('@')[0];
                 var chips = element.chips;
@@ -169,9 +169,18 @@ class Game {
                 card2.scale.y = .1;
                 app.stage.addChild(card2);
 
-                counter++;
             }
             else if (element.order == 1) {
+
+                if (element.order == turn) {
+
+                    indicator1 = new PIXI.Graphics();
+                    indicator2.lineStyle(3, 0xffffff);
+                    indicator3.drawCircle(750, 620, 80);
+                    indicator4.endFill();
+                    app.stage.addChild(indicator1);
+
+                }
                 var username = element.username.split('@')[0];
                 var chips = element.chips;
 
@@ -207,7 +216,6 @@ class Game {
                 card2.scale.y = .1;
                 app.stage.addChild(card2);
 
-                counter++;
 
             }
             else if (element.order == 2) {
@@ -246,7 +254,6 @@ class Game {
                 card2.scale.y = .1;
                 app.stage.addChild(card2);
 
-                counter++;
             }
             else {
                 var username = element.username.split('@')[0];

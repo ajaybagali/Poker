@@ -54,7 +54,7 @@
                 .done(function (result) {
                     //new game
                     if (result.turn != -1) {
-                        game.draw_players(result.players);
+                        game.draw_players(result.players, result.turn);
                         game.draw_pot(result.pot);
                         game.draw_river_cards(result.river1, result.river2, result.river3, result.river4, result.river5);
 
