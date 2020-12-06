@@ -25,6 +25,8 @@ namespace Poker.Models
             PokerGame = game;
             UserName = username;
             Order = order;
+            Card1 = -1;
+            Card2 = -1;
         }
         public bool hasCard(int card) {
             return Card1 == card || Card2 == card;

@@ -162,18 +162,25 @@ namespace Poker.Controllers
             }
 
             // Validate bet amount --- UI Shouldn't allow these to be hit
-            if (amount > curPlayer.Chips + curPlayer.CurrentBet)
+            if (amount > curPlayer.Chips)
             {
                 return Json("Not enough chips");
             } else if (amount % 10 != 0)
             {
                 return Json("Invalid bet amount");
             }
-
-            // If bet amount is less than minimum, the player folds
-            if (amount < game.MinimumBet)
+            // If amount is zero, player calls
+            if (amount == 0)
+            {
+                amount = game.MinimumBet - curPlayer.CurrentBet;
+            }
+            // If amount is -1, player folds
+            if (amount == -1)
             {
                 curPlayer.Folded = true;
+            } else if (amount + curPlayer.CurrentBet < game.MinimumBet)
+            {
+                return Json("Too low of a bet");
             }
             else
             {
