@@ -9,70 +9,11 @@
 /**
  * Global Variable - access to the PIXI Application
  */
-
-var card_images =
-{
-    0 : '/lib/PNG/AH.png',
-    1 : '/lib/PNG/AD.png',
-    2 : '/lib/PNG/AS.png',
-    3 : '/lib/PNG/AC.png',
-    4 : '/lib/PNG/2H.png',
-    5  : '/lib/PNG/2D.png',
-    6  : '/lib/PNG/2S.png',
-    7  : '/lib/PNG/2C.png',
-    8 : '/lib/PNG/3H.png',
-    9 : '/lib/PNG/3D.png',
-    10 : '/lib/PNG/3S.png',
-    11  : '/lib/PNG/3C.png',
-    12  : '/lib/PNG/4H.png',
-    13  : '/lib/PNG/4D.png',
-    14  : '/lib/PNG/4S.png',
-    15  : '/lib/PNG/4C.png',
-    16  : '/lib/PNG/5H.png',
-    17  : '/lib/PNG/5D.png',
-    18 : '/lib/PNG/5S.png',
-    19  : '/lib/PNG/5C.png',
-    20   : '/lib/PNG/6H.png',
-    21  : '/lib/PNG/6D.png',
-    22  : '/lib/PNG/6S.png',
-    23  : '/lib/PNG/6C.png',
-    24   : '/lib/PNG/7H.png',
-    25 : '/lib/PNG/7D.png',
-    26  : '/lib/PNG/7S.png',
-    27   : '/lib/PNG/7C.png',
-    28   : '/lib/PNG/8H.png',
-    29   : '/lib/PNG/8D.png',
-    30   : '/lib/PNG/8S.png',
-    31   : '/lib/PNG/8C.png',
-    32   : '/lib/PNG/9H.png',
-    33   : '/lib/PNG/9D.png',
-    34   : '/lib/PNG/9S.png',
-    35   : '/lib/PNG/9C.png',
-    36   : '/lib/PNG/10H.png',
-    37   : '/lib/PNG/10D.png',
-    38  : '/lib/PNG/10S.png',
-    39   : '/lib/PNG/10C.png',
-    40   : '/lib/PNG/JH.png',
-    41  : '/lib/PNG/JD.png',
-    42  : '/lib/PNG/JS.png',
-    43  : '/lib/PNG/JC.png',
-    44  : '/lib/PNG/QH.png',
-    45  : '/lib/PNG/QD.png',
-    46  : '/lib/PNG/QS.png',
-    47   : '/lib/PNG/QC.png',
-    48  : '/lib/PNG/KH.png',
-    49   : '/lib/PNG/KD.png',
-    50  : '/lib/PNG/KS.png',
-    51 : '/lib/PNG/KC.png',
-};
-
 class Game {
 
 
     constructor() {
     }
-
-
 
     /**
     * Main startup function
@@ -84,7 +25,37 @@ class Game {
       
         //white game screen
         setup_pixi_stage(1580, 830, 0xFFFFFF);
+
+        
         app.stage.addChild(new Game_Board());
+
+        const dice_image = PIXI.Sprite.from('/lib/decorations.png');
+        dice_image.x = 1410;
+        dice_image.y = 590;
+        dice_image.scale.x = .25;
+        dice_image.scale.y = .25;
+        app.stage.addChild(dice_image);
+
+        const pot_image = PIXI.Sprite.from('/lib/pot1.png');
+        pot_image.x = 600;
+        pot_image.y = 380;
+        pot_image.scale.x = .25;
+        pot_image.scale.y = .25;
+        app.stage.addChild(pot_image);
+
+        //gold box
+        const pot = new PIXI.Graphics();
+        pot.beginFill(0xFFD700);
+        pot.drawRect(760, 430, 100, 40);
+        pot.endFill();
+        app.stage.addChild(pot);
+
+        //gold pot text
+        let pot_text = new PIXI.Text('POT', { fill: "0xFFD700"});
+        pot_text.x = 780;
+        pot_text.y = 400;
+        pot_text.style.fontSize = 20;
+        app.stage.addChild(pot_text);
 
         this.add_game_buttons();
     }
@@ -143,19 +114,60 @@ class Game {
 
     }
 
+    draw_river_cards(river1, river2, river3, river4, river5)
+    {
+        const r1 = PIXI.Sprite.from(card_images[river1]);
+        r1.x = 550;
+        r1.y = 270;
+        r1.scale.x = .1;
+        r1.scale.y = .1;
+        app.stage.addChild(r1);
+
+        const r2 = PIXI.Sprite.from(card_images[river2]);
+        r2.x = 650;
+        r2.y = 270;
+        r2.scale.x = .1;
+        r2.scale.y = .1;
+        app.stage.addChild(r2);
+
+
+        const r3 = PIXI.Sprite.from(card_images[river3]);
+        r3.x = 750;
+        r3.y = 270;
+        r3.scale.x = .1;
+        r3.scale.y = .1;
+        app.stage.addChild(r3);
+
+
+        var r4;
+        //next turn river cards
+        if (river4 != -1) { r4 = PIXI.Sprite.from(card_images[river4])}
+        else { r4 = PIXI.Sprite.from(card_images[52]); }
+        r4.x = 850;
+        r4.y = 270;
+        r4.scale.x = .1;
+        r4.scale.y = .1;
+        app.stage.addChild(r4);
+
+
+        var r5;
+        //next turn river cards
+        if (river5 != -1) { r5 = PIXI.Sprite.from(card_images[river5]) }
+        else { r5 = PIXI.Sprite.from(card_images[52]); }
+        r5.x = 950;
+        r5.y = 270;
+        r5.scale.x = .1;
+        r5.scale.y = .1;
+        app.stage.addChild(r5);
+
+    }
+
     draw_pot(potVal)
     {
-        // draw big green rectangle
-        
-        const pot = new PIXI.Graphics();
-        pot.beginFill(0xffffff);
-        pot.drawRect(750, 400, 150, 75);
-        pot.endFill();
-        app.stage.addChild(pot);
 
-        let potAmount = new PIXI.Text(potVal);
-        potAmount.x = 850;
-        potAmount.y = 450;
+        let potAmount = new PIXI.Text('$' + potVal);
+        potAmount.x = 770;
+        potAmount.y = 445;
         potAmount.style.fontSize = 20;
         app.stage.addChild(potAmount);
     }
@@ -166,36 +178,37 @@ class Game {
 
         players.forEach(element => {
             if (counter == 0) {
-                var  username = element.username;
+            
+                var  username = element.username.split('@')[0];
                 var chips = element.chips;
 
                 const bubble = new PIXI.Graphics();
-                bubble.beginFill(0xffffff);
-                bubble.drawCircle(750, 650, 90);
+                bubble.beginFill(0xffcccb);
+                bubble.lineStyle(3, 0xff0000);
+                bubble.drawCircle(750, 620, 75);
                 bubble.endFill();
                 app.stage.addChild(bubble);
 
                 let playername = new PIXI.Text(username);
-                playername.x = 650;
-                playername.y = 650;
+                playername.x = 730;
+                playername.y = 600;
                 playername.style.fontSize = 20;
                 app.stage.addChild(playername);
 
                 let playerchips = new PIXI.Text('$' + chips);
-                playerchips.x = 650;
-                playerchips.y = 700;
+                playerchips.x = 720;
+                playerchips.y = 640;
                 app.stage.addChild(playerchips);
 
-                const image = PIXI.Sprite.from(card_images[element.card1]);
-                image.x = 845;               
-                image.y = 560;
-                image.scale.x = .1;
-                image.scale.y = .1;
-                app.stage.addChild(image);
-
+                const card1 = PIXI.Sprite.from(card_images[element.card1]);
+                card1.x = 845;               
+                card1.y = 560;
+                card1.scale.x = .1;
+                card1.scale.y = .1;
+                app.stage.addChild(card1);
 
                 const card2 = PIXI.Sprite.from(card_images[element.card2]);
-                card2.x = 950;
+                card2.x = 925;
                 card2.y = 560;
                 card2.scale.x = .1;
                 card2.scale.y = .1;
@@ -204,103 +217,121 @@ class Game {
                 counter++;
             }
             else if (counter == 1) {
-                var username = element.username;
+                var username = element.username.split('@')[0];
                 var chips = element.chips;
 
                 const bubble = new PIXI.Graphics();
-                bubble.beginFill(0xffffff);
-                bubble.drawCircle(100, 300, 90);
+                bubble.beginFill(0xffcccb);
+                bubble.lineStyle(3, 0xff0000);
+                bubble.drawCircle(90, 300, 75);
                 bubble.endFill();
                 app.stage.addChild(bubble);
 
                 let playername = new PIXI.Text(username);
-                playername.x = 125;
+                playername.x = 70;
                 playername.y = 270;
                 playername.style.fontSize = 20;
                 app.stage.addChild(playername);
 
                 let playerchips = new PIXI.Text('$' + chips);
-                playerchips.x = 170;
-                playerchips.y = 320;
+                playerchips.x = 60;
+                playerchips.y = 310;
                 app.stage.addChild(playerchips);
+
+                const card1 = PIXI.Sprite.from(card_images[element.card1]);
+                card1.x = 160;
+                card1.y = 150;
+                card1.scale.x = .1;
+                card1.scale.y = .1;
+                app.stage.addChild(card1);
+
+                const card2 = PIXI.Sprite.from(card_images[element.card2]);
+                card2.x = 240;
+                card2.y = 150;
+                card2.scale.x = .1;
+                card2.scale.y = .1;
+                app.stage.addChild(card2);
 
                 counter++;
 
             }
             else if (counter == 2) {
-                var username = element.username;
+                var username = element.username.split('@')[0];
                 var chips = element.chips;
 
                 const bubble = new PIXI.Graphics();
-                bubble.beginFill(0xffffff);
-                bubble.drawCircle(750, 100, 90);
+                bubble.beginFill(0xffcccb);
+                bubble.lineStyle(3, 0xff0000);
+                bubble.drawCircle(750, 100, 75);
                 bubble.endFill();
                 app.stage.addChild(bubble);
 
                 let playername = new PIXI.Text(username);
-                playername.x = 700;
-                playername.y = 100;
+                playername.x = 720;
+                playername.y = 60;
                 playername.style.fontSize = 20;
                 app.stage.addChild(playername);
 
                 let playerchips = new PIXI.Text('$' + chips);
-                playerchips.x = 700;
-                playerchips.y = 150;
+                playerchips.x = 710;
+                playerchips.y = 100;
                 app.stage.addChild(playerchips);
+
+                const card1 = PIXI.Sprite.from(card_images[element.card1]);
+                card1.x = 850;
+                card1.y = 65;
+                card1.scale.x = .1;
+                card1.scale.y = .1;
+                app.stage.addChild(card1);
+
+                const card2 = PIXI.Sprite.from(card_images[element.card2]);
+                card2.x = 930;
+                card2.y = 65;
+                card2.scale.x = .1;
+                card2.scale.y = .1;
+                app.stage.addChild(card2);
 
                 counter++;
             }
             else {
-                var username = element.username;
+                var username = element.username.split('@')[0];
                 var chips = element.chips;
 
                 const bubble = new PIXI.Graphics();
-                bubble.beginFill(0xffffff);
-                bubble.drawCircle(1350, 300, 90);
+                bubble.beginFill(0xffcccb);
+                bubble.lineStyle(3, 0xff0000);
+                bubble.drawCircle(1450, 300, 75);
                 bubble.endFill();
                 app.stage.addChild(bubble);
 
                 let playername = new PIXI.Text(username);
-                playername.x = 1350;
-                playername.y = 300;
+                playername.x = 1430;
+                playername.y = 270;
                 playername.style.fontSize = 20;
                 app.stage.addChild(playername);
 
                 let playerchips = new PIXI.Text('$' + chips);
-                playerchips.x = 1400;
-                playerchips.y = 350;
+                playerchips.x = 1420;
+                playerchips.y = 310;
                 app.stage.addChild(playerchips);
 
-                counter++;
+                const card1 = PIXI.Sprite.from(card_images[element.card1]);
+                card1.x = 1220;
+                card1.y = 150;
+                card1.scale.x = .1;
+                card1.scale.y = .1;
+                app.stage.addChild(card1);
+
+                const card2 = PIXI.Sprite.from(card_images[element.card2]);
+                card2.x = 1300;
+                card2.y = 150;
+                card2.scale.x = .1;
+                card2.scale.y = .1;
+                app.stage.addChild(card2);
+
             }
             
         });
 
     }
-
-
-
-
-
-    // worker() {
-    //    data = { id: document.getElementById("gameid").textContent };
-    //    $.post('/Games/Data', data)
-    //        .done(function (result) {
-    //            if (result.turn != -1) {
-    //                window.location.replace("../Play/" + result.id)
-    //            }
-
-    //            //While(stage.children[0]) { stage.removeChild(stage.children[0]); }
-
-
-    //            setTimeout(worker, 1000);
-    //        });
-    //}
-
-
-
 }
-
-//window.onload = function () {
-//    setTimeout(worker, 1000);
-//};

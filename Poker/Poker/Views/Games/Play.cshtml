@@ -4,7 +4,14 @@
     ViewData["Title"] = "Game";
 }
 
-<p class="gameid">@Model.ID</p>
+<div class="input-group" style="position:absolute; left: 35px; top: 7%;">
+    <input class="form-control" type="number" value="50" min="0" max="8000" step="10" style="max-width:150px;" id="betAmount" />
+    <div class="input-group-append" id="button-addon4">
+        <button class="btn btn-outline-primary" type="button" style="background-color:green; color:white;" id="betButton">Bet</button>
+        <button class="btn btn-outline-secondary" type="button" style="background-color:black; color:white;" id="callButton">Call</button>
+        <button class="btn btn-outline-secondary" type="button" style="background-color:red; color:white;" id=foldButton>Fold</button>
+    </div>
+</div>
 <body style="overflow-x:hidden; overflow-y:hidden">
     <div class="game_background" id="game_background"></div>
 </body>
@@ -18,9 +25,25 @@
     <script type="text/javascript" src="~/js/button.js"></script>
     <script type="text/javascript" src="~/js/setup.js"></script>
     <script type="text/javascript" src="~/js/game_board.js"></script>
+    <script type="text/javascript" src = "~/js/card_images.js"></script>
 
     <script type="text/javascript">
 
+        $("#betButton").click(bet);
+        function bet() {
+            data = { id: @Model.ID, amount: document.getElementById("betAmount").value }
+            $.post('/Games/Bet', data);
+        }
+        $("#callButton").click(call);
+        function call() {
+            data = { id: @Model.ID, amount: 0 }
+            $.post('/Games/Bet', data);
+        }
+        $("#foldButton").click(fold);
+        function fold() {
+            data = { id: @Model.ID, amount: -1 }
+            $.post('/Games/Bet', data);
+        }
 
         var game = new Game();
         game.main();
@@ -33,9 +56,9 @@
                     if (result.turn != -1) {
                         game.draw_players(result.players);
                         game.draw_pot(result.pot);
+                        game.draw_river_cards(result.river1, result.river2, result.river3, result.river4, result.river5);
 
                     }
-
                     setTimeout(worker, 3000);
                 });
         }
