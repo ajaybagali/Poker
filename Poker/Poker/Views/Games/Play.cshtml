@@ -1,11 +1,13 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model Poker.Models.Game
+
 @{
+    ViewData["Title"] = "Game";
 }
 
-
-<div class="game_background" id="game_background"></div>
+<p class="gameid">@Model.ID</p>
+<body style="overflow-x:hidden; overflow-y:hidden">
+    <div class="game_background" id="game_background"></div>
+</body>
 
 
 @section Scripts {
@@ -19,10 +21,30 @@
 
     <script type="text/javascript">
 
-        $(function () {
-            var game = new Game();
-            game.main();
-        });
+
+        var game = new Game();
+        game.main();
+
+        function worker() {
+            data = { id: @Model.ID };
+            $.post('/Games/Data', data)
+                .done(function (result) {
+                    //new game
+                    if (result.turn != -1) {
+                        game.draw_players(result.players);
+                        game.draw_pot(result.pot);
+
+                    }
+
+                    setTimeout(worker, 3000);
+                });
+        }
+
+        window.onload = function () {
+            setTimeout(worker, 3000);
+        };
+
 
     </script>
 }
+

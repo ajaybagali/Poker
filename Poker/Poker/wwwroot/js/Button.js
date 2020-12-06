@@ -28,8 +28,9 @@ class Button extends PIXI.Graphics {
      * outline_color - outline on button
      * text          - optional string on button
      */
-    constructor({ handler = null, bg_color = 0xffffff, outline_color = 0x000000, text = null }) {
+    constructor({ handler = null, bg_color = 0xffffff, outline_color = 0x000000, text = null}) {
         super();
+
 
         this.interactive = true;
         this.buttonMode = true;
@@ -46,6 +47,20 @@ class Button extends PIXI.Graphics {
             this.add_text(text);
         }
     }
+
+    //constructor({ handler = null, type = null })
+    //{
+    //    this, this.event_handler = handler;
+    //    //up button
+    //    if (type == 1) {
+
+    //    }
+    //    //down button
+    //    else {
+
+    //    }
+
+    //}
 
     /**
      * Replace the event handling function with the new function.

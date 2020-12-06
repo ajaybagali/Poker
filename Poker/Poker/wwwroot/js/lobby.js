@@ -11,6 +11,7 @@ function worker() {
             result.players.forEach(element => { 
                 $("#gameresponse").append(`<p>${element.username}</p>`);
             });
+
              setTimeout(worker, 1000);
         });
 }
