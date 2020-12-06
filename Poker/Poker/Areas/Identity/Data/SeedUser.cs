@@ -45,6 +45,15 @@ namespace Poker.Areas.Identity.Data
                 user3.Email = "stealthgod@gmail.com";
                 user3.EmailConfirmed = true;
                 await userManager.CreateAsync(user3, password);
+
+                PokerUser user4 = new PokerUser();
+                user4.BluffWins = 0;
+                user4.Wins = 0;
+                user4.Chips = 0;
+                user4.UserName = "joe@gmail.com";
+                user4.Email = "joe@gmail.com";
+                user4.EmailConfirmed = true;
+                await userManager.CreateAsync(user4, password);
             }
 
 
