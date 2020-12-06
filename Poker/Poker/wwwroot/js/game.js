@@ -11,11 +11,8 @@
  */
 class Game {
 
-     pot_exists; 
 
     constructor() {
-
-    this.pot_exists = false;
 
     }
 
@@ -46,20 +43,6 @@ class Game {
         pot_image.scale.x = .25;
         pot_image.scale.y = .25;
         app.stage.addChild(pot_image);
-
-        //gold box
-        const pot = new PIXI.Graphics();
-        pot.beginFill(0xFFD700);
-        pot.drawRect(760, 430, 100, 40);
-        pot.endFill();
-        app.stage.addChild(pot);
-
-        //gold pot text
-        let pot_text = new PIXI.Text('POT', { fill: "0xFFD700"});
-        pot_text.x = 780;
-        pot_text.y = 400;
-        pot_text.style.fontSize = 20;
-        app.stage.addChild(pot_text);
     }
 
 
@@ -113,17 +96,25 @@ class Game {
 
     draw_pot(potVal)
     {
-        if (this.pot_exists) {
-            app.stage.removeChild(potAmount);
-        }
- 
+
+        const pot = new PIXI.Graphics();
+        pot.beginFill(0xFFD700);
+        pot.drawRect(760, 430, 100, 40);
+        pot.endFill();
+        app.stage.addChild(pot);
+
+        //gold pot text
+        let pot_text = new PIXI.Text('POT', { fill: "0xFFD700" });
+        pot_text.x = 780;
+        pot_text.y = 400;
+        pot_text.style.fontSize = 20;
+        app.stage.addChild(pot_text);
+
         let potAmount = new PIXI.Text('$' + potVal);
         potAmount.x = 770;
         potAmount.y = 445;
         potAmount.style.fontSize = 20;
         app.stage.addChild(potAmount);
-
-        this.pot_exists = true;
     }
 
 
