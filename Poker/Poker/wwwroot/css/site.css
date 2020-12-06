@@ -54,13 +54,16 @@ button.accept-policy {
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
+    margin: 0px;
+    width: 100%;
 }
 
 body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+    width: 100%;
 }
 .footer {
   position: absolute;
@@ -84,10 +87,10 @@ body {
 }
 
 .game_background {
-    position: absolute;
-    top: 12%;
-    left: 35px;
     z-index: -1;
+    padding: 0px;
+    padding: 0px;
+    float: left;
 }
 
 .gameid {
