@@ -20,7 +20,7 @@ var app = null;
  */
 function setup_pixi_stage(width, height, bg_color)
 {
-    app = new PIXI.Application({ backgroundColor: bg_color });
+    app = new PIXI.Application({  backgroundColor: bg_color });
     app.renderer.resize(width, height);
     $("#game_background").append(app.view);
 }
