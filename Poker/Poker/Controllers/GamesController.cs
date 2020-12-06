@@ -104,9 +104,9 @@ namespace Poker.Controllers
 
             if (g.Turn == -1)
             {
-                g.StartGame(_context);
-             //   _context.Update(g);
-             //   await _context.SaveChangesAsync();
+                await g.StartGame(_context);
+                _context.Update(g);
+                await _context.SaveChangesAsync();
             }
 
             return View(g);
@@ -177,6 +177,7 @@ namespace Poker.Controllers
             }
             else
             {
+                // Apply bet to state of the game
                 curPlayer.Chips += curPlayer.CurrentBet - amount;
                 game.Pot += amount - curPlayer.CurrentBet;
                 curPlayer.CurrentBet = amount;
@@ -188,17 +189,26 @@ namespace Poker.Controllers
             await _context.SaveChangesAsync();
 
             // If end of round, flip card
-            if (game.Turn == game.Dealer)  { }
-            // If all cards flipped, end hand
-                // score all players' hands
-                // give pot to non-folded player with highest score, record hand win for user
-                // record bluff win if player without highest score wins pot
-                // if one player has all the money, end the game
-                    // record game win for user
-                // else
-                    game.StartHand(_context);
-            // Else
-                game.NextTurn(_context);
+            if (game.Turn == game.Dealer)  {
+                if (game.IsEndHand())
+                {
+                    await game.EndHand(_context, _userManager);
+                    _context.Update(game);
+                    await _context.SaveChangesAsync();
+                }
+                else
+                {
+                    game.FlipCard();
+                    await game.NextTurn(_context, _userManager);
+                    _context.Update(game);
+                    await _context.SaveChangesAsync();
+                }
+            } else
+            {
+                await game.NextTurn(_context, _userManager);
+                _context.Update(game);
+                await _context.SaveChangesAsync();
+            }
 
             return Json(game);
         }
