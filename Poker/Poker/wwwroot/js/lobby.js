@@ -25,6 +25,7 @@ function worker() {
 <p>card2: suit: ${element.card2 % 4} val: ${(element.card2 / 4) | 0}</p>
 <p>current bet: ${element.currentBet}</p>`);
             });
+
              setTimeout(worker, 1000);
         });
 }

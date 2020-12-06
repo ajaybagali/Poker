@@ -20,15 +20,26 @@ class Game_Board extends PIXI.Graphics {
      * Code to draw the board
      */
     draw_self() {
-        let board_color = 0x66CC00;
-        let board_outline_color = 0x006400;
+        let board_color = 0x009900;
+        let board_outline_color = 0x006600;
 
         // draw big green rectangle
         this.lineStyle(3, board_outline_color);
         this.beginFill(board_color);
-        this.drawRect(0, 0, 1540, 700);
+        this.drawRect(5, 5, 1540, 700);
         this.endFill();
     }
+
+    //draw_amount_box() {
+    //    let board_color = 0xFFFFFF;
+    //    let board_outline_color = 0x0000000;
+
+    //    // draw big green rectangle
+    //    this.lineStyle(3, board_outline_color);
+    //    this.beginFill(board_color);
+    //    this.drawRect(1100, 740, 150, 60);
+    //    this.endFill();
+    //}
 }
 
 

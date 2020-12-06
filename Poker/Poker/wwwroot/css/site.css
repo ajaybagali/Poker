@@ -88,3 +88,7 @@ body {
     top: 100px;
     left: 35px;
 }
+
+.gameid {
+    display:none;
+}
