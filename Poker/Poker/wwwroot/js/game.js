@@ -46,8 +46,10 @@ class Game {
 
     draw_message_board(action)
     {
+
         const message_board = new PIXI.Graphics();
-        message_board.beginFill(0xFFFFFF);
+        message_board.lineStyle(3, 0x301934);
+        message_board.beginFill(0xD8BFD8);
         message_board.drawRect(30, 715, 600, 50);
         message_board.endFill();
         app.stage.addChild(message_board);
