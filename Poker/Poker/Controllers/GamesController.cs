@@ -79,9 +79,12 @@ namespace Poker.Controllers
 
             int curPlayers = g.Players.Count;
 
-            if (curPlayers > 4)
+            if (curPlayers > 3)
             {
-                return NotFound();
+                return Redirect("~/Games/Denied/1");
+            } else if (g.Turn != -1)
+            {
+                return Redirect("~/Games/Denied/0");
             }
 
             foreach(Player p in g.Players)
@@ -97,16 +100,44 @@ namespace Poker.Controllers
             return Redirect("~/Games/Lobby/" + g.ID.ToString());
         }
 
+        [Authorize]
+        public IActionResult Denied(int? id) {
+
+            switch (id)
+            {
+                case (0):
+                    return View("Denied", "Game in progress.");
+                case (1):
+                    return View("Denied", "Game lobby full.");
+                case (2):
+                    return View("Denied", "User not in game.");
+                case (3):
+                    return View("Denied", "Game has ended.");
+                default:
+                    break;
+            }
+
+            return View();
+        }
+
+        [Authorize]
         public async Task<IActionResult> Play(int? id)
         {
+            PokerUser curUser = await _userManager.GetUserAsync(User);
             Game g = await _context.Game
                 .Include(g => g.Players).Where(g => g.ID == id).SingleOrDefaultAsync();
-
+            if (!g.IsInGame(curUser.UserName))
+            {
+                return Redirect("~/Games/Denied/2");
+            }
             if (g.Turn == -1)
             {
                 await g.StartGame(_context);
                 _context.Update(g);
                 await _context.SaveChangesAsync();
+            } else if (g.Winner != null)
+            {
+                return Redirect("~/Games/Denied/3");
             }
 
             return View(g);
@@ -234,7 +265,7 @@ namespace Poker.Controllers
                 return Json(e.Message);
             }
 
-            return Json(game.GetJson());
+            return Json(game.GetJson(user.UserName));
         }
     }
 }

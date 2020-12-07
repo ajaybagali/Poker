@@ -24,6 +24,7 @@ namespace Poker.Models
         public int River5 { get; set; }
         public int MinimumBet { get; set; }
         public int Pot { get; set; }
+        public string Action { get; set; }
 
         private static readonly int START_CHIPS = 2000;
         public Game()
@@ -36,24 +37,41 @@ namespace Poker.Models
             River3 = -1;
             River4 = -1;
             River5 = -1;
+            Action = "Game not started. Please wait for player to start game.";
         }
 
-        public dynamic GetJson()
+        public dynamic GetJson(string username)
         {
             List<dynamic> players = new List<dynamic>();
             foreach (Player p in Players)
             {
-                players.Add(new
+                if (p.UserName.Equals(username))
                 {
-                    id = p.ID,
-                    username = p.UserName,
-                    chips = p.Chips,
-                    folded = p.Folded,
-                    card1 = p.Card1,
-                    card2 = p.Card2,
-                    order = p.Order,
-                    currentBet = p.CurrentBet,
-                });
+                    players.Add(new
+                    {
+                        id = p.ID,
+                        username = p.UserName,
+                        chips = p.Chips,
+                        folded = p.Folded,
+                        card1 = p.Card1,
+                        card2 = p.Card2,
+                        order = p.Order,
+                        currentBet = p.CurrentBet,
+                    });
+                } else
+                {
+                    players.Add(new
+                    {
+                        id = p.ID,
+                        username = p.UserName,
+                        chips = p.Chips,
+                        folded = p.Folded,
+                        card1 = 52,
+                        card2 = 52,
+                        order = p.Order,
+                        currentBet = p.CurrentBet,
+                    });
+                }
             }
             dynamic result = new
             {
@@ -69,6 +87,7 @@ namespace Poker.Models
                 minimumBet = MinimumBet,
                 pot = Pot,
                 players = players,
+                action = Action,
             };
             return result;
         }
@@ -112,6 +131,16 @@ namespace Poker.Models
             }
             await context.SaveChangesAsync();
             await StartHand(context);
+        }
+
+        public bool IsInGame(string userName)
+        {
+            foreach (Player p in Players)
+            {
+                if (p.UserName.Equals(userName))
+                    return true;
+            }
+            return false;
         }
 
         public async Task StartHand(GameContext context)
