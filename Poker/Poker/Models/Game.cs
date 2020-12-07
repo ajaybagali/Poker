@@ -153,6 +153,12 @@ namespace Poker.Models
             River4 = -1;
             River5 = -1;
 
+            Dealer++;
+            if (Dealer >= Players.Count) Dealer = 0;
+
+            Turn = Dealer + 1;
+            if (Turn >= Players.Count) Turn = 0;
+
             foreach (Player player in Players)
             {
                 player.Card1 = GenerateCard();
@@ -160,16 +166,16 @@ namespace Poker.Models
                 player.Folded = false;
                 player.CurrentBet = 0;
                 context.Update(player);
+
+                if (player.Order == Turn)
+                {
+                    Action = "New Hand! " + player.UserName + "\'s turn!";
+                }
             }
             await context.SaveChangesAsync();
-            Dealer++;
-            if (Dealer >= Players.Count) Dealer = 0;
-
-            Turn = Dealer + 1;
-            if (Turn >= Players.Count) Turn = 0;
         }
 
-        public async Task NextTurn(GameContext context, UserManager<PokerUser> userManager)
+        public async Task NextTurn(GameContext context, UserManager<PokerUser> userManager, string betAction)
         {
             Turn++;
             if (Turn >= Players.Count) Turn = 0;
@@ -188,6 +194,8 @@ namespace Poker.Models
                 if (Turn >= Players.Count) Turn = 0;
                 nextPlayer = GetPlayerByTurn(Turn);
             }
+
+            Action = betAction += nextPlayer.UserName + "\'s turn!";
         }
 
         private Player GetPlayerByTurn(int turn)

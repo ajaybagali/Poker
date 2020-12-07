@@ -25,12 +25,14 @@ namespace Poker.Controllers
             _userManager = userContext;
         }
 
+        [Authorize]
         // GET: Games
         public async Task<IActionResult> Index()
         {
             return View(await _context.Game.ToListAsync());
         }
 
+        [Authorize]
         // GET: Games/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -143,6 +145,7 @@ namespace Poker.Controllers
             return View(g);
         }
 
+        [Authorize]
         public async Task<IActionResult> Lobby(int? id)
         {
             Game g = await _context.Game
@@ -157,6 +160,7 @@ namespace Poker.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ID")] Game game)
         {
@@ -171,11 +175,13 @@ namespace Poker.Controllers
 
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Bet(int id, int amount)
         {
             PokerUser user = await _userManager.GetUserAsync(User);
             Game game = await _context.Game
                 .Include(g => g.Players).Where(g => g.ID == id).SingleOrDefaultAsync();
+            string message;
 
             // Verify that the game exists and is in progress
             if (game == null) return Json("Game not found");
@@ -204,11 +210,17 @@ namespace Poker.Controllers
             if (amount == 0)
             {
                 amount = game.MinimumBet - curPlayer.CurrentBet;
+                message = curPlayer.UserName + " called. ";
+            } 
+            else
+            {
+                message = curPlayer.UserName + " bet " + amount.ToString() + "! ";
             }
             // If amount is -1, player folds
             if (amount == -1)
             {
                 curPlayer.Folded = true;
+                message = curPlayer.UserName + " folded. ";
             } else if (amount + curPlayer.CurrentBet < game.MinimumBet)
             {
                 return Json("Too low of a bet");
@@ -237,13 +249,13 @@ namespace Poker.Controllers
                 else
                 {
                     game.FlipCard();
-                    await game.NextTurn(_context, _userManager);
+                    await game.NextTurn(_context, _userManager, message + "Flop! ");
                     _context.Update(game);
                     await _context.SaveChangesAsync();
                 }
             } else
             {
-                await game.NextTurn(_context, _userManager);
+                await game.NextTurn(_context, _userManager, message);
                 _context.Update(game);
                 await _context.SaveChangesAsync();
             }
