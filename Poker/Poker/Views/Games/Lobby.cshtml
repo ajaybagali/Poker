@@ -5,24 +5,20 @@
 }
 
 <body class="background">
-    <div class="jumbotron" style="position:absolute; left:100px; width:400px"  >
-        <h1>Lobby</h1>
-        <h4>Game</h4>
+    <div class="jumbotron text-center" style="background-color:darkred;"  >
+        <h1 style="color:white;">Game Lobby</h1>
+        <br />
+        <h3 style="color:white;">Game code: <span id="gameid">@Model.ID</span></h3>
         <hr />
-        <div class="row">
-            <div class="col-md-4">
-                <p>
-                    Game Code:
-                </p>
-                <p id="gameid">@Model.ID</p>
-                <ul class="list-group" id="gameresponse" style="width:200px">
+            <h4 style="color:white;">Players</h4>
+            <div style="align-items:center;">
+                <ul class="list-group" id="gameresponse">
                 </ul>
-                </p>
             </div>
-        </div>
+        <br />
 
         <div>
-            <a class="btn btn-primary btn-lg" href="/Games/Play/@Model.ID" id="startbutton" role="button">Start Game</a>
+            <a class="btn btn-primary btn-lg" href="/Games/Play/@Model.ID" id="startbutton" style="background-color:darkgreen;" role="button" >Start Game</a>
         </div>
 
     </div>

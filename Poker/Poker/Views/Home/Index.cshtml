@@ -3,14 +3,36 @@
 }
 
 <body class="background">
-    <div class="Header">
-        <h1 class="display-4">Welcome to Poker</h1>
-        <p class="lead">Chill Time Poker Game</p>
-        <a class="btn btn-primary btn-lg" style="background-color: #d12d36" asp-controller="Games" asp-action="Create" role="button">Start Game</a>
-        <h3> OR </h3>
-        <p class="homeElement"> Enter the game code to join another game! </p>
-        <input class="form-control" type="text" id="gameIdInput" style="width: 126px">
-        <a class="btn btn-primary btn-lg" style="background-color: #d12d36" id="joinbox" role="button">Join Game</a>
+    <div class="jumbotron" style="background-color:darkred;">
+        <h1 class="display-4" style="color:white;">Welcome to Poker!</h1>
+        <p class="lead" style="color:white;">Casual Poker Game</p>
     </div>
+
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <a class="btn btn-outline-secondary" style="background-color: darkgreen; color:white;" asp-controller="Games" asp-action="Create" role="button">Start Game</a>
+        </div>
+        <div class="input-group-append">
+            <span class="input-group-text">OR</span>
+        </div>
+        @*<input class="form-control" type="text" id="gameIdInput" style="width: 126px">
+            <a class="btn btn-primary btn-lg" style="background-color: #d12d36" id="joinbox" role="button">Join Game</a>*@
+        <div class="input-group-append">
+            <a class="btn btn-outline-secondary" style="background-color: darkred; color:white;" type="button" id="joinbox">Join Game</a>
+        </div>
+        <input class="form-control" type="text" id="gameIdInput" style="width: 50px" placeholder="15">
+    </div>
+
+    @*<div class="Header">
+            <h1 class="display-4">Welcome to Poker</h1>
+            <p class="lead">Chill Time Poker Game</p>
+            <a class="btn btn-primary btn-lg" style="background-color: #d12d36" asp-controller="Games" asp-action="Create" role="button">Start Game</a>
+            <h3> OR </h3>
+            <p class="homeElement"> Enter the game code to join another game! </p>
+            <input class="form-control" type="text" id="gameIdInput" style="width: 126px">
+            <a class="btn btn-primary btn-lg" style="background-color: #d12d36" id="joinbox" role="button">Join Game</a>
+        </div>*@
+
 </body>
 
+<script type="text/javascript" src="~/js/site.js"></script>

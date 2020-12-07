@@ -2,10 +2,12 @@
 @model Poker.Areas.Identity.Data.PokerUser
 
 <body class="background">
-
-    <h1>My Stats </h1>
-    <br>
-    <h3>Chips: @Model.Chips </h3>
-    <h3>Wins: @Model.Wins </h3>
-    <h3>Bluff Wins: @Model.BluffWins </h3>
+    <div class="jumbotron" style="background-color:darkred; color:white;">
+        <h1 class="display-4">My Stats</h1>
+        <hr class="my-4">
+        <p>Chips: @Model.Chips </p>
+        <p>Hands won: @Model.Wins </p>
+        <p>Hands won off of bluffs: @Model.BluffWins </p>
+    </div>
 </body>
+
