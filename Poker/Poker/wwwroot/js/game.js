@@ -11,7 +11,6 @@
  */
 class Game {
 
-
     constructor() {
 
     }
@@ -25,14 +24,14 @@ class Game {
     main() {
       
         //white game screen
-        setup_pixi_stage(1010, 710, 0xFFFFFF);
+        setup_pixi_stage(1010, 790, 0xFFFFFF);
 
         
         app.stage.addChild(new Game_Board());
 
         const dice_image = PIXI.Sprite.from('/lib/decorations.png');
         dice_image.x = 860;
-        dice_image.y = 590;
+        dice_image.y = 675;
         dice_image.scale.x = .25;
         dice_image.scale.y = .25;
         app.stage.addChild(dice_image);
@@ -43,6 +42,23 @@ class Game {
         pot_image.scale.x = .25;
         pot_image.scale.y = .25;
         app.stage.addChild(pot_image);
+    }
+
+    draw_message_board(action)
+    {
+        const message_board = new PIXI.Graphics();
+        message_board.beginFill(0xFFFFFF);
+        message_board.drawRect(30, 715, 600, 50);
+        message_board.endFill();
+        app.stage.addChild(message_board);
+
+        let text = new PIXI.Text(action, { fill: "0x000000" });
+        text.x = 40;
+        text.y = 730;
+        text.style.fontSize = 17;
+        app.stage.addChild(text);
+        
+
     }
 
 
@@ -128,8 +144,13 @@ class Game {
         players.forEach(element => {
             if (element.order == 0) {
 
+                var username = element.username.split('@')[0];
+                var chips = element.chips;
+
                 if (element.order == turn)
                 {
+                    
+
                     //redraw over 
                     indicator2 = new PIXI.Graphics();
                     indicator2.lineStyle(3, 0x009900);
@@ -160,8 +181,6 @@ class Game {
 
                 }
             
-                var  username = element.username.split('@')[0];
-                var chips = element.chips;
 
                 const bubble = new PIXI.Graphics();
                 bubble.beginFill(0xffcccb);
