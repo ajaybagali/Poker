@@ -9,7 +9,7 @@ function worker() {
             }
             $("#gameresponse")[0].innerHTML = '';
             result.players.forEach(element => { 
-                $("#gameresponse").append(`<p>user: ${element.username}</p>`);
+                $("#gameresponse").append(`<li class="list-group-item">${element.username}</li>`);
             });
 
              setTimeout(worker, 1000);

@@ -4,26 +4,28 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Lobby</h1>
-<body>
-    <h4>Game</h4>
-    <hr />
-    <div class="row">
-        <div class="col-md-4">
-            <p>
-                Game Code:
-            </p>
-            <p id="gameid">@Model.ID</p>
-            <p id="gameresponse"></p>
+<body class="background">
+    <div class="jumbotron" style="position:absolute; left:100px; width:400px"  >
+        <h1>Lobby</h1>
+        <h4>Game</h4>
+        <hr />
+        <div class="row">
+            <div class="col-md-4">
+                <p>
+                    Game Code:
+                </p>
+                <p id="gameid">@Model.ID</p>
+                <ul class="list-group" id="gameresponse" style="width:200px">
+                </ul>
+                </p>
+            </div>
         </div>
+
+        <div>
+            <a class="btn btn-primary btn-lg" href="/Games/Play/@Model.ID" id="startbutton" role="button">Start Game</a>
+        </div>
+
     </div>
-
-
-
-    <div>
-        <a class="btn btn-primary btn-lg" href="/Games/Play/@Model.ID" id="startbutton" role="button">Start Game</a>
-    </div>
-
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/js/lobby.js"></script>
 </body>

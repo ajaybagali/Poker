@@ -96,3 +96,15 @@ body {
 .gameid {
     display:none;
 }
+.play_backgound {
+    background-image: url(/lib/pokertable.jpg);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    left: 10%;
+}
+.jumbotron{
+    position:absolute;
+    left:50px;
+    background-color:ghostwhite;
+}
