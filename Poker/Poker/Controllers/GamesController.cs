@@ -202,10 +202,7 @@ namespace Poker.Controllers
             if (amount > curPlayer.Chips)
             {
                 return Json("Not enough chips");
-            } else if (amount % 10 != 0)
-            {
-                return Json("Invalid bet amount");
-            }
+            } 
             // If amount is zero, player calls
             if (amount == 0)
             {
@@ -217,19 +214,24 @@ namespace Poker.Controllers
                 message = curPlayer.UserName + " bet " + amount.ToString() + "! ";
             }
             // If amount is -1, player folds
-            if (amount == -1)
+            if (amount == 1)
             {
                 curPlayer.Folded = true;
                 message = curPlayer.UserName + " folded. ";
-            } else if (amount + curPlayer.CurrentBet < game.MinimumBet)
+            }
+            else if (amount % 10 != 0)
+            {
+                return Json("Invalid bet amount");
+            }
+            else if (amount + curPlayer.CurrentBet < game.MinimumBet)
             {
                 return Json("Too low of a bet");
             }
             else
             {
                 // Apply bet to state of the game
-                curPlayer.Chips += curPlayer.CurrentBet - amount;
-                game.Pot += amount - curPlayer.CurrentBet;
+                curPlayer.Chips -= amount;
+                game.Pot += amount;
                 curPlayer.CurrentBet = amount;
                 game.MinimumBet = amount;
 

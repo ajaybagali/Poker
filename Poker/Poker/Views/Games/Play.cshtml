@@ -41,7 +41,7 @@
         }
         $("#foldButton").click(fold);
         function fold() {
-            data = { id: @Model.ID, amount: -1 }
+            data = { id: @Model.ID, amount: 1 }
             $.post('/Games/Bet', data);
         }
 
@@ -60,12 +60,12 @@
                         game.draw_message_board(result.action);
 
                     }
-                    setTimeout(worker, 1000);
+                    setTimeout(worker, 3000);
                 });
         }
 
         window.onload = function () {
-            setTimeout(worker, 1000);
+            setTimeout(worker, 3000);
         };
 
 
