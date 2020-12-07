@@ -26,7 +26,7 @@ class Game_Board extends PIXI.Graphics {
         // draw big green rectangle
         this.lineStyle(5, board_outline_color);
         this.beginFill(board_color);
-        this.drawRect(5, 5, 1000, 700);
+        this.drawRect(5, 5, 1000, 780);
         this.endFill();
     }
 }

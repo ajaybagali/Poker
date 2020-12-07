@@ -14,6 +14,7 @@
     </div>
 
     <div class="game_background" id="game_background"></div>
+ 
 </body>
 
 @section Scripts {
@@ -56,14 +57,15 @@
                         game.draw_players(result.players, result.turn);
                         game.draw_pot(result.pot);
                         game.draw_river_cards(result.river1, result.river2, result.river3, result.river4, result.river5);
+                        game.draw_message_board(result.action);
 
                     }
-                    setTimeout(worker, 3000);
+                    setTimeout(worker, 1000);
                 });
         }
 
         window.onload = function () {
-            setTimeout(worker, 3000);
+            setTimeout(worker, 1000);
         };
 
 
