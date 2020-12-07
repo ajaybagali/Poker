@@ -199,7 +199,7 @@ namespace Poker.Controllers
             }
 
             // Validate bet amount --- UI Shouldn't allow these to be hit
-            if (amount > curPlayer.Chips)
+            if (amount - 1 > curPlayer.Chips)
             {
                 return Json("Not enough chips");
             } 

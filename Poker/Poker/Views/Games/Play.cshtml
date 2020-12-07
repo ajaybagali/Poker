@@ -60,12 +60,15 @@
                         game.draw_message_board(result.action);
 
                     }
+                    if (result.turn === -2) {
+                        window.location.replace("../Denied/3");
+                    }
                     setTimeout(worker, 3000);
                 });
         }
 
         window.onload = function () {
-            setTimeout(worker, 3000);
+            setTimeout(worker, 500);
         };
 
 

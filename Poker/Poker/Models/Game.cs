@@ -253,10 +253,14 @@ namespace Poker.Models
             Player highPlayer = null, highNonFoldPlayer = null;
             Tuple<int, int> highNonFoldScore = highScore;
 
+            if (River4 == -1) River4 = GenerateCard();
+            if (River5 == -1) River5 = GenerateCard();
+
             // find winner of hand
             foreach (Player p in Players)
             {
                 Tuple<int, int> score = ScoreHand(p);
+
                 if (score.Item1 > highScore.Item1 || (score.Item1 == highScore.Item1 && score.Item2 > highScore.Item2))
                 {
                     highScore = score;
@@ -283,6 +287,8 @@ namespace Poker.Models
             winner.Wins++;
             if (highNonFoldPlayer.UserName != highPlayer.UserName) winner.BluffWins++;
             await userManager.UpdateAsync(winner);
+
+            Action = winner.UserName + " won the hand!";
 
             if (GameIsOver())
             {
