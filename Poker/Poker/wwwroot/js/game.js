@@ -41,7 +41,7 @@ class Game {
         app.stage.addChild(dice_image);
 
         const pot_image = PIXI.Sprite.from('/lib/pot1.png');
-        pot_image.x = 385;
+        pot_image.x = 485;
         pot_image.y = 380;
         pot_image.scale.x = .25;
         pot_image.scale.y = .25;
@@ -116,6 +116,29 @@ class Game {
         app.stage.addChild(r5);
 
     }
+    //draws game minimum bet
+    draw_minimum_bet(bet)
+    {
+        const bet_box = new PIXI.Graphics();
+        bet_box.beginFill(0x3377FF);
+        bet_box.drawRect(325, 430, 100, 40);
+        bet_box.endFill();
+        app.stage.addChild(bet_box);
+
+        //MINIMUM BET pot text
+        let pot_text = new PIXI.Text('MIN BET', { fill: "0xFFFFFF" });
+        pot_text.x = 335;
+        pot_text.y = 400;
+        pot_text.style.fontSize = 20;
+        app.stage.addChild(pot_text);
+
+        let betAmount = new PIXI.Text('$' + bet, { fill: "0xFFFFFF" });
+        betAmount.x = 355;
+        betAmount.y = 445;
+        betAmount.style.fontSize = 20;
+        app.stage.addChild(betAmount);
+
+    }
 
     //draws poker pot on gameboard
     draw_pot(potVal)
@@ -123,19 +146,19 @@ class Game {
 
         const pot = new PIXI.Graphics();
         pot.beginFill(0xFFD700);
-        pot.drawRect(525, 430, 100, 40);
+        pot.drawRect(625, 430, 100, 40);
         pot.endFill();
         app.stage.addChild(pot);
 
         //gold pot text
         let pot_text = new PIXI.Text('POT', { fill: "0xFFD700" });
-        pot_text.x = 535;
+        pot_text.x = 645;
         pot_text.y = 400;
         pot_text.style.fontSize = 20;
         app.stage.addChild(pot_text);
 
         let potAmount = new PIXI.Text('$' + potVal);
-        potAmount.x = 555;
+        potAmount.x = 655;
         potAmount.y = 445;
         potAmount.style.fontSize = 20;
         app.stage.addChild(potAmount);
@@ -161,7 +184,6 @@ class Game {
                 if (element.order == turn)
                 {
                     
-
                     //redraw over 
                     indicator2 = new PIXI.Graphics();
                     indicator2.lineStyle(3, 0x009900);
@@ -225,6 +247,26 @@ class Game {
                 card2.scale.x = .1;
                 card2.scale.y = .1;
                 app.stage.addChild(card2);
+
+                //player bet box
+                const bet_box = new PIXI.Graphics();
+                bet_box.beginFill(0xFF0000);
+                bet_box.drawRect(650, 600, 100, 40);
+                bet_box.endFill();
+                app.stage.addChild(bet_box);
+
+                // BET  text
+                let bet_text = new PIXI.Text('BET', { fill: "0xFFFFFF" });
+                bet_text.x = 660;
+                bet_text.y = 570;
+                bet_text.style.fontSize = 20;
+                app.stage.addChild(bet_text);
+
+                let betAmount = new PIXI.Text('$' + element.currentBet, { fill: "0xFFFFFF" });
+                betAmount.x = 670;
+                betAmount.y = 615;
+                betAmount.style.fontSize = 20;
+                app.stage.addChild(betAmount);
 
             }
             //player 2 UI
@@ -295,6 +337,28 @@ class Game {
                 card2.scale.x = .1;
                 card2.scale.y = .1;
                 app.stage.addChild(card2);
+
+
+                //player bet box
+                const bet_box = new PIXI.Graphics();
+                bet_box.beginFill(0xFF0000);
+                bet_box.drawRect(50, 410, 100, 40);
+                bet_box.endFill();
+                app.stage.addChild(bet_box);
+
+                // BET  text
+                let bet_text = new PIXI.Text('BET', { fill: "0xFFFFFF" });
+                bet_text.x = 50;
+                bet_text.y = 380;
+                bet_text.style.fontSize = 20;
+                app.stage.addChild(bet_text);
+
+                let betAmount = new PIXI.Text('$' + element.currentBet, { fill: "0xFFFFFF" });
+                betAmount.x = 60;
+                betAmount.y = 420;
+                betAmount.style.fontSize = 20;
+                app.stage.addChild(betAmount);
+
 
 
             }
@@ -368,6 +432,25 @@ class Game {
                 card2.scale.y = .1;
                 app.stage.addChild(card2);
 
+                const bet_box = new PIXI.Graphics();
+                bet_box.beginFill(0xFF0000);
+                bet_box.drawRect(320, 65, 100, 40);
+                bet_box.endFill();
+                app.stage.addChild(bet_box);
+
+                // BET  text
+                let bet_text = new PIXI.Text('BET', { fill: "0xFFFFFF" });
+                bet_text.x = 330;
+                bet_text.y = 35;
+                bet_text.style.fontSize = 20;
+                app.stage.addChild(bet_text);
+
+                let betAmount = new PIXI.Text('$' + element.currentBet, { fill: "0xFFFFFF" });
+                betAmount.x = 335;
+                betAmount.y = 75;
+                betAmount.style.fontSize = 20;
+                app.stage.addChild(betAmount);
+
             }
             //player 4 UI
             else {
@@ -438,6 +521,26 @@ class Game {
                 card2.scale.x = .1;
                 card2.scale.y = .1;
                 app.stage.addChild(card2);
+
+
+                const bet_box = new PIXI.Graphics();
+                bet_box.beginFill(0xFF0000);
+                bet_box.drawRect(840, 160, 100, 40);
+                bet_box.endFill();
+                app.stage.addChild(bet_box);
+
+                // BET  text
+                let bet_text = new PIXI.Text('BET', { fill: "0xFFFFFF" });
+                bet_text.x = 850;
+                bet_text.y = 130;
+                bet_text.style.fontSize = 20;
+                app.stage.addChild(bet_text);
+
+                let betAmount = new PIXI.Text('$' + element.currentBet, { fill: "0xFFFFFF" });
+                betAmount.x = 860;
+                betAmount.y = 170;
+                betAmount.style.fontSize = 20;
+                app.stage.addChild(betAmount);
 
             }
             
