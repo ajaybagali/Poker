@@ -24,7 +24,7 @@ using System.Threading.Tasks;
 
 namespace Poker.Models
 {
-    
+
     public class Game
     {
         public int ID { get; set; }
@@ -246,7 +246,7 @@ namespace Poker.Models
                 nextPlayer = GetPlayerByTurn(Turn);
             }
 
-            if (IsEndHand())
+            if (OnePlayerNotFolded())
             {
                 await EndHand(context, userManager);
                 return;
@@ -317,6 +317,17 @@ namespace Poker.Models
             if (betters < 2) return true;
 
             return false;
+        }
+
+        public bool OnePlayerNotFolded()
+        {
+            int betters = 0;
+            foreach (Player p in Players)
+            {
+                if (!p.Folded) betters++;
+
+            }
+            return betters == 1;
         }
         /// <summary>
         /// flips river cards

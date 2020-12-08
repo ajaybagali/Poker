@@ -106,7 +106,10 @@ namespace Poker.Controllers
             PokerUser curUser = await _userManager.GetUserAsync(User);
             Game g = await _context.Game
                 .Include(g => g.Players).Where(g => g.ID == id).SingleOrDefaultAsync();
-
+            if (g == null)
+            {
+                return Redirect("~/Games/Denied/4");
+            }
             int curPlayers = g.Players.Count;
 
             if (g.IsInGame(curUser.UserName))
@@ -292,26 +295,22 @@ namespace Poker.Controllers
             if (amount - 1 > curPlayer.Chips)
             {
                 return Json("Not enough chips");
-            } 
+            }
             // If amount is zero, player calls
             if (amount == 0)
             {
                 amount = game.MinimumBet - curPlayer.CurrentBet;
                 message = curPlayer.UserName + " called. ";
-            } 
-            else
-            {
-                message = curPlayer.UserName + " bet " + amount.ToString() + "! ";
+
+                if (amount > curPlayer.Chips)
+                {
+                    amount = curPlayer.Chips;
+                }
             }
-            // If amount is -1, player folds
-            if (amount == 1)
+            else if (amount == 1)
             {
                 curPlayer.Folded = true;
                 message = curPlayer.UserName + " folded. ";
-            }
-            else if (amount % 10 != 0)
-            {
-                return Json("Invalid bet amount");
             }
             else if (amount + curPlayer.CurrentBet < game.MinimumBet)
             {
@@ -319,11 +318,23 @@ namespace Poker.Controllers
             }
             else
             {
+                message = curPlayer.UserName + " bet " + amount.ToString() + "! ";
+            }
+            // If amount is 1, player folds
+            if (amount == 1)
+            {
+            }
+            else if (amount % 10 != 0)
+            {
+                return Json("Invalid bet amount");
+            }
+            else
+            {
                 // Apply bet to state of the game
                 curPlayer.Chips -= amount;
                 game.Pot += amount;
-                curPlayer.CurrentBet = amount;
-                game.MinimumBet = amount;
+                curPlayer.CurrentBet += amount;
+                game.MinimumBet = Math.Max(game.MinimumBet, curPlayer.CurrentBet);
 
                 _context.Update(game);
             }
