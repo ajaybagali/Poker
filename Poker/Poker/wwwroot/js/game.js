@@ -251,20 +251,20 @@ class Game {
                 //player bet box
                 const bet_box = new PIXI.Graphics();
                 bet_box.beginFill(0xFF0000);
-                bet_box.drawRect(650, 600, 100, 40);
+                bet_box.drawRect(620, 600, 100, 40);
                 bet_box.endFill();
                 app.stage.addChild(bet_box);
 
                 // BET  text
                 let bet_text = new PIXI.Text('BET', { fill: "0xFFFFFF" });
-                bet_text.x = 660;
+                bet_text.x = 640;
                 bet_text.y = 570;
                 bet_text.style.fontSize = 20;
                 app.stage.addChild(bet_text);
 
                 let betAmount = new PIXI.Text('$' + element.currentBet, { fill: "0xFFFFFF" });
-                betAmount.x = 670;
-                betAmount.y = 615;
+                betAmount.x = 630;
+                betAmount.y = 610;
                 betAmount.style.fontSize = 20;
                 app.stage.addChild(betAmount);
 
@@ -348,7 +348,7 @@ class Game {
 
                 // BET  text
                 let bet_text = new PIXI.Text('BET', { fill: "0xFFFFFF" });
-                bet_text.x = 50;
+                bet_text.x = 75;
                 bet_text.y = 380;
                 bet_text.style.fontSize = 20;
                 app.stage.addChild(bet_text);
@@ -440,7 +440,7 @@ class Game {
 
                 // BET  text
                 let bet_text = new PIXI.Text('BET', { fill: "0xFFFFFF" });
-                bet_text.x = 330;
+                bet_text.x = 340;
                 bet_text.y = 35;
                 bet_text.style.fontSize = 20;
                 app.stage.addChild(bet_text);
@@ -525,19 +525,19 @@ class Game {
 
                 const bet_box = new PIXI.Graphics();
                 bet_box.beginFill(0xFF0000);
-                bet_box.drawRect(840, 160, 100, 40);
+                bet_box.drawRect(855, 160, 100, 40);
                 bet_box.endFill();
                 app.stage.addChild(bet_box);
 
                 // BET  text
                 let bet_text = new PIXI.Text('BET', { fill: "0xFFFFFF" });
-                bet_text.x = 850;
+                bet_text.x = 865;
                 bet_text.y = 130;
                 bet_text.style.fontSize = 20;
                 app.stage.addChild(bet_text);
 
                 let betAmount = new PIXI.Text('$' + element.currentBet, { fill: "0xFFFFFF" });
-                betAmount.x = 860;
+                betAmount.x = 875;
                 betAmount.y = 170;
                 betAmount.style.fontSize = 20;
                 app.stage.addChild(betAmount);
