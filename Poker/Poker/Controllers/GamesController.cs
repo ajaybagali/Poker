@@ -190,7 +190,7 @@ namespace Poker.Controllers
                 return Redirect("~/Games/Denied/2");
             }
 
-            return View("Winner", curUser.UserName);
+            return View("Winner", g.Winner);
         }
 
         /// <summary>
