@@ -246,6 +246,12 @@ namespace Poker.Models
                 nextPlayer = GetPlayerByTurn(Turn);
             }
 
+            if (IsEndHand())
+            {
+                await EndHand(context, userManager);
+                return;
+            }
+
             Action = betAction += nextPlayer.UserName + "\'s turn!";
         }
 

@@ -109,6 +109,16 @@ namespace Poker.Controllers
 
             int curPlayers = g.Players.Count;
 
+            if (g.IsInGame(curUser.UserName))
+            {
+                if (g.Turn == -1)
+                    return Redirect("~/Games/Lobby/" + g.ID.ToString());
+                else if (g.Turn == -2)
+                    return Redirect("~/Games/Winner/" + g.ID.ToString());
+                else
+                    return Redirect("~/Games/Play/" + g.ID.ToString());
+            }
+
             if (curPlayers > 3)
             {
                 return Redirect("~/Games/Denied/1");
@@ -148,11 +158,36 @@ namespace Poker.Controllers
                     return View("Denied", "User not in game.");
                 case (3):
                     return View("Denied", "Game has ended.");
+                case (4):
+                    return View("Denied", "Game doesn't exist.");
                 default:
                     break;
             }
 
             return View();
+        }
+        /// <summary>
+        /// returns access denied views
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Authorize]
+        public async Task<IActionResult> Winner(int? id)
+        {
+
+            PokerUser curUser = await _userManager.GetUserAsync(User);
+            Game g = await _context.Game
+                .Include(g => g.Players).Where(g => g.ID == id).SingleOrDefaultAsync();
+            if (g == null)
+            {
+                return Redirect("~/Games/Denied/4");
+            }
+            if (!g.IsInGame(curUser.UserName))
+            {
+                return Redirect("~/Games/Denied/2");
+            }
+
+            return View("Winner", curUser.UserName);
         }
 
         /// <summary>
@@ -166,6 +201,7 @@ namespace Poker.Controllers
             PokerUser curUser = await _userManager.GetUserAsync(User);
             Game g = await _context.Game
                 .Include(g => g.Players).Where(g => g.ID == id).SingleOrDefaultAsync();
+
             if (!g.IsInGame(curUser.UserName))
             {
                 return Redirect("~/Games/Denied/2");
@@ -177,7 +213,8 @@ namespace Poker.Controllers
                 await _context.SaveChangesAsync();
             } else if (g.Winner != null)
             {
-                return Redirect("~/Games/Denied/3");
+
+                return Redirect("~/Games/Winner/" + g.ID.ToString());
             }
 
             return View(g);
