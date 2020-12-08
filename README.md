@@ -8,9 +8,9 @@ Copyright: CS 4540 and Ryan Furukawa, Ajay Bagali and Jon England- This work may
 
 Github Page:   https://github.com/uofu-cs4540-fall2020/final-project-ryanfuru/ <br />
 
-Ajay URL: <br />
-Ryan URL: <br />
-Jon URL: <br />
+Ajay URL: ec2-107-23-242-147.compute-1.amazonaws.com <br />
+Ryan URL: ec2-54-173-227-116.compute-1.amazonaws.com <br />
+Jon URL: ec2-54-174-113-51.compute-1.amazonaws.com <br />
 
 Comments to Evaluators: None<br />
 
