@@ -1,4 +1,19 @@
-﻿using System;
+﻿/**
+ * Author:    Ajay Bagali, Jon England, Ryan Furukawa
+ * Date:      12/7/2020
+ * Course:    CS 4540, University of Utah, School of Computing
+ * Copyright: CS 4540 and Ajay Bagali,Jon England, Ryan Furukawa - This work may not be copied for use in Academic Coursework.
+ *
+ * I, Ajay Bagali, Jon England, and Ryan Furukawa, certify that I wrote this code from scratch and did 
+ * not copy it in part or whole from another source.  Any references used 
+ * in the completion of the assignment are cited in my README file and in
+ * the appropriate method header.
+ *
+ * File Contents
+ *
+ *    Game controller logic and handles frontend requests
+ */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -25,6 +40,10 @@ namespace Poker.Controllers
             _userManager = userContext;
         }
 
+        /// <summary>
+        /// returns game view
+        /// </summary>
+        /// <returns></returns>
         [Authorize]
         // GET: Games
         public async Task<IActionResult> Index()
@@ -32,6 +51,11 @@ namespace Poker.Controllers
             return View(await _context.Game.ToListAsync());
         }
 
+        /// <summary>
+        /// returns specific instance of game
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Authorize]
         // GET: Games/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -51,6 +75,10 @@ namespace Poker.Controllers
             return View(game);
         }
 
+        /// <summary>
+        /// creates a new game with players
+        /// </summary>
+        /// <returns></returns>
         // GET: Games/Create
         [Authorize]
         public async Task<IActionResult> Create()
@@ -102,6 +130,11 @@ namespace Poker.Controllers
             return Redirect("~/Games/Lobby/" + g.ID.ToString());
         }
 
+        /// <summary>
+        /// returns access denied views
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Authorize]
         public IActionResult Denied(int? id) {
 
@@ -122,6 +155,11 @@ namespace Poker.Controllers
             return View();
         }
 
+        /// <summary>
+        /// returns game view if user is a part of the game
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Authorize]
         public async Task<IActionResult> Play(int? id)
         {
@@ -145,6 +183,11 @@ namespace Poker.Controllers
             return View(g);
         }
 
+        /// <summary>
+        /// returns lobby view for specific game isntace 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Authorize]
         public async Task<IActionResult> Lobby(int? id)
         {
@@ -156,6 +199,11 @@ namespace Poker.Controllers
             return View("Lobby", g);
         }
 
+        /// <summary>
+        /// Creates a new game instance and returns its view
+        /// </summary>
+        /// <param name="game"></param>
+        /// <returns></returns>
         // POST: Games/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -173,7 +221,12 @@ namespace Poker.Controllers
             return View(game);
         }
 
-
+        /// <summary>
+        /// bet logic when requested from front end
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="amount"></param>
+        /// <returns></returns>
         [HttpPost]
         [Authorize]
         public async Task<IActionResult> Bet(int id, int amount)
@@ -265,6 +318,12 @@ namespace Poker.Controllers
             return Json(game);
         }
 
+
+        /// <summary>
+        /// returns current game data as json object
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> Data(int id)
         {

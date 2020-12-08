@@ -1,4 +1,19 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿/**
+ * Author:    Ajay Bagali, Jon England, Ryan Furukawa
+ * Date:      12/7/2020
+ * Course:    CS 4540, University of Utah, School of Computing
+ * Copyright: CS 4540 and Ajay Bagali,Jon England, Ryan Furukawa - This work may not be copied for use in Academic Coursework.
+ *
+ * I, Ajay Bagali, Jon England, and Ryan Furukawa, certify that I wrote this code from scratch and did 
+ * not copy it in part or whole from another source.  Any references used 
+ * in the completion of the assignment are cited in my README file and in
+ * the appropriate method header.
+ *
+ * File Contents
+ *
+ *    seeds userdatabase with mock players
+ */
+using Microsoft.AspNetCore.Identity;
 using Poker.Data;
 using System;
 using System.Collections.Generic;
@@ -32,8 +47,8 @@ namespace Poker.Areas.Identity.Data
                 user2.BluffWins = 0;
                 user2.Wins = 0;
                 user2.Chips = 0;
-                user2.UserName = "borat@gmail.com";
-                user2.Email = "borat@gmail.com";
+                user2.UserName = "don@gmail.com";
+                user2.Email = "don@gmail.com";
                 user2.EmailConfirmed = true;
                 await userManager.CreateAsync(user2, password);
 
@@ -41,8 +56,8 @@ namespace Poker.Areas.Identity.Data
                 user3.BluffWins = 0;
                 user3.Wins = 0;
                 user3.Chips = 0;
-                user3.UserName = "stealthgod@gmail.com";
-                user3.Email = "stealthgod@gmail.com";
+                user3.UserName = "sam@gmail.com";
+                user3.Email = "sam@gmail.com";
                 user3.EmailConfirmed = true;
                 await userManager.CreateAsync(user3, password);
 

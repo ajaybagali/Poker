@@ -1,8 +1,19 @@
-﻿@page
+﻿
+@page
 @model RegisterModel
 @{
     ViewData["Title"] = "Register";
 }
+<!--
+  Author:    Ajay Bagali, Jon England, Ryan Furukawa
+  Date:      12/7/2020
+  Course:    CS 4540, University of Utah, School of Computing
+  Copyright: CS 4540 and Ajay Bagali, Jon England, and Ryan Furukawa - This work may not be copied for use in Academic Coursework.
+  I, Ajay Bagali,Jon England, and Ryan Furukawa, and Jon England certify that I wrote this code from scratch and did not copy it in part or whole from
+  another source.  Any references used in the completion of the assignment are cited in my README file.
+  File Contents
+    new account registration
+-->
 
 <h1>@ViewData["Title"]</h1>
 
@@ -14,7 +25,7 @@
                 <hr />
                 <div asp-validation-summary="All" class="text-danger"></div>
                 <div class="form-group">
-                    <label asp-for="Input.Email" ></label>
+                    <label asp-for="Input.Email"></label>
                     <input asp-for="Input.Email" class="form-control" />
                     <span asp-validation-for="Input.Email" class="text-danger"></span>
                 </div>
@@ -31,7 +42,7 @@
                 <button type="submit" class="btn btn-primary">Register</button>
             </form>
         </div>
-        
+
     </div>
 </body>
 
