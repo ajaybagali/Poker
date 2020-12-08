@@ -1,4 +1,19 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿/**
+ * Author:    Ajay Bagali, Jon England, Ryan Furukawa
+ * Date:      12/7/2020
+ * Course:    CS 4540, University of Utah, School of Computing
+ * Copyright: CS 4540 and Ajay Bagali,Jon England, Ryan Furukawa - This work may not be copied for use in Academic Coursework.
+ *
+ * I, Ajay Bagali, Jon England, and Ryan Furukawa, certify that I wrote this code from scratch and did 
+ * not copy it in part or whole from another source.  Any references used 
+ * in the completion of the assignment are cited in my README file and in
+ * the appropriate method header.
+ *
+ * File Contents
+ *
+ *    Game model for holding gaame data
+ */
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Poker.Areas.Identity.Data;
 using Poker.Data;
@@ -40,6 +55,11 @@ namespace Poker.Models
             Action = "Game not started. Please wait for player to start game.";
         }
 
+        /// <summary>
+        /// Returns a JSON game object to the frontend
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
         public dynamic GetJson(string username)
         {
             List<dynamic> players = new List<dynamic>();
@@ -92,6 +112,11 @@ namespace Poker.Models
             return result;
         }
 
+        /// <summary>
+        /// validate current players at the poker game
+        /// </summary>
+        /// <param name="player"></param>
+        /// <returns></returns>
         public Player ValidateUser(String player)
         {
             foreach (Player p in Players)
@@ -109,6 +134,10 @@ namespace Poker.Models
             throw new Exception("User not in game");
         }
 
+        /// <summary>
+        /// check to see if a player is in the game or not
+        /// </summary>
+        /// <param name="username"></param>
         public void VerifyPlayer(string username)
         {
             foreach (Player p in Players)
@@ -119,6 +148,11 @@ namespace Poker.Models
             throw new Exception("User not in game");
         }
 
+        /// <summary>
+        /// Starts a new game and updates the Poker dataabase 
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
         public async Task StartGame(GameContext context)
         {
             Dealer = 0;
@@ -133,6 +167,11 @@ namespace Poker.Models
             await StartHand(context);
         }
 
+        /// <summary>
+        /// Checkts to see if a player is in the game
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
         public bool IsInGame(string userName)
         {
             foreach (Player p in Players)
@@ -143,6 +182,11 @@ namespace Poker.Models
             return false;
         }
 
+        /// <summary>
+        /// generates starting handing for dealer and player
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
         public async Task StartHand(GameContext context)
         {
             Pot = 0;
@@ -175,6 +219,13 @@ namespace Poker.Models
             await context.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// handles next player turn logic
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="userManager"></param>
+        /// <param name="betAction"></param>
+        /// <returns></returns>
         public async Task NextTurn(GameContext context, UserManager<PokerUser> userManager, string betAction)
         {
             Turn++;
@@ -198,6 +249,11 @@ namespace Poker.Models
             Action = betAction += nextPlayer.UserName + "\'s turn!";
         }
 
+        /// <summary>
+        /// gets the player of the current turn
+        /// </summary>
+        /// <param name="turn"></param>
+        /// <returns></returns>
         private Player GetPlayerByTurn(int turn)
         {
             foreach (Player p in Players)
@@ -207,6 +263,10 @@ namespace Poker.Models
             return null;
         }
 
+        /// <summary>
+        /// generates a random card
+        /// </summary>
+        /// <returns></returns>
         public int GenerateCard()
         {
             Random random = new Random();
@@ -219,6 +279,11 @@ namespace Poker.Models
             return card;
         }
 
+        /// <summary>
+        /// checks to see if a player has a card in their hand
+        /// </summary>
+        /// <param name="card"></param>
+        /// <returns></returns>
         private bool PlayerHasCard(int card)
         {
             foreach (Player player in Players)
@@ -228,6 +293,11 @@ namespace Poker.Models
             }
             return false;
         }
+
+        /// <summary>
+        /// checks if its last hand
+        /// </summary>
+        /// <returns></returns>
         public bool IsEndHand()
         {
             if (River5 != -1) return true;
@@ -242,11 +312,21 @@ namespace Poker.Models
 
             return false;
         }
+        /// <summary>
+        /// flips river cards
+        /// </summary>
         public void FlipCard()
         {
             if (River4 == -1) River4 = GenerateCard();
             else River5 = GenerateCard();
         }
+
+        /// <summary>
+        /// tells us if card is in a users hand
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="userManager"></param>
+        /// <returns></returns>
         public async Task EndHand(GameContext context, UserManager<PokerUser> userManager)
         {
             Tuple<int, int> highScore = Tuple.Create(-1, -1);
@@ -301,12 +381,20 @@ namespace Poker.Models
             await StartHand(context);
         }
 
+        /// <summary>
+        /// ends poker game
+        /// </summary>
+        /// <param name="winner"></param>
         private void EndGame(PokerUser winner)
         {
             Winner = winner.UserName;
             Turn = -2;
         }
 
+        /// <summary>
+        /// checks if game is over
+        /// </summary>
+        /// <returns></returns>
         private bool GameIsOver()
         {
             int haveChips = 0;
@@ -317,6 +405,11 @@ namespace Poker.Models
             return haveChips < 2;
         }
 
+        /// <summary>
+        /// scores player hands
+        /// </summary>
+        /// <param name="player"></param>
+        /// <returns></returns>
         public Tuple<int, int> ScoreHand(Player player)
         {
             List<int> hand = new List<int> { River1, River2, River3,
@@ -396,6 +489,9 @@ namespace Poker.Models
             return Tuple.Create((int)Hands.HIGH_CARD, noDuplicates[noDuplicates.Count - 1]);
         }
 
+        /// <summary>
+        /// enum to score hands
+        /// </summary>
         public enum Hands
         {
             HIGH_CARD = 0,
@@ -410,6 +506,13 @@ namespace Poker.Models
             ROYAL_FLUSH = 9
         }
 
+        /// <summary>
+        /// checks if there is a straight in player hand
+        /// </summary>
+        /// <param name="start"></param>
+        /// <param name="end"></param>
+        /// <param name="flushCards"></param>
+        /// <returns></returns>
         public bool RangeContainsStraight(int start, int end, List<int> flushCards)
         {
             for (int i = start; i < end; i++)
@@ -422,6 +525,11 @@ namespace Poker.Models
             return true;
         }
 
+        /// <summary>
+        /// checks  to see if there is a flush in players hands
+        /// </summary>
+        /// <param name="hand"></param>
+        /// <returns></returns>
         private List<int> GetFlush(List<int> hand)
         {
             List<List<int>> suits = new List<List<int>>() {

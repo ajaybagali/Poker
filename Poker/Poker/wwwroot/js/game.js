@@ -1,13 +1,17 @@
 ﻿/**
- * Initialize the WebCanvas Pixi Stage
+ * Author:    Ajay Bagali, Jon England, Ryan Furukawa
+ * Date:      12/7/2020
+ * Course:    CS 4540, University of Utah, School of Computing
+ * Copyright: CS 4540 and Ajay Bagali, Jon England, Ryan Furukawa - This work may not be copied for use in Academic Coursework.
  *
- * Author: Ajay Bagali
- * Date: Fall 2020
+ * I, Ajay Bagali, Jon England, and Ryan Furukawa, certify that I wrote this code from scratch and did
+ * not copy it in part or whole from another source.  Any references used
+ * in the completion of the assignment are cited in my README file and in
+ * the appropriate method header.
  *
- */
-
-/**
- * Global Variable - access to the PIXI Application
+ * File Contents
+ *
+ *    game board UI updating
  */
 class Game {
 
@@ -44,6 +48,7 @@ class Game {
         app.stage.addChild(pot_image);
     }
 
+    //draws messsage board to show game state
     draw_message_board(action)
     {
 
@@ -63,7 +68,7 @@ class Game {
 
     }
 
-
+    //draws the river cards on the board
     draw_river_cards(river1, river2, river3, river4, river5)
     {
         const r1 = PIXI.Sprite.from(card_images[river1]);
@@ -112,6 +117,7 @@ class Game {
 
     }
 
+    //draws poker pot on gameboard
     draw_pot(potVal)
     {
 
@@ -135,20 +141,23 @@ class Game {
         app.stage.addChild(potAmount);
     }
 
-
+    //draws and updates players
     draw_players(players, turn) {
 
+        //white circles indicating whose turn it is 
         var indicator1;
         var indicator2;
         var indicator3;
         var indicator4;
 
+        
         players.forEach(element => {
             if (element.order == 0) {
 
                 var username = element.username.split('@')[0];
                 var chips = element.chips;
 
+                //player 1 UI
                 if (element.order == turn)
                 {
                     
@@ -202,6 +211,7 @@ class Game {
                 playerchips.y = 640;
                 app.stage.addChild(playerchips);
 
+                //player 1 cards
                 const card1 = PIXI.Sprite.from(card_images[element.card1]);
                 card1.x = 255;               
                 card1.y = 560;
@@ -217,6 +227,7 @@ class Game {
                 app.stage.addChild(card2);
 
             }
+            //player 2 UI
             else if (element.order == 1) {
 
                 if (element.order == turn) {
@@ -270,6 +281,7 @@ class Game {
                 playerchips.y = 310;
                 app.stage.addChild(playerchips);
 
+                //player 2 cards
                 const card1 = PIXI.Sprite.from(card_images[element.card1]);
                 card1.x = 30;
                 card1.y = 100;
@@ -286,6 +298,7 @@ class Game {
 
 
             }
+            //player 3 UI
             else if (element.order == 2) {
 
                 if (element.order == turn) {
@@ -340,6 +353,7 @@ class Game {
                 playerchips.y = 100;
                 app.stage.addChild(playerchips);
 
+                //player 3 cards
                 const card1 = PIXI.Sprite.from(card_images[element.card1]);
                 card1.x = 635;
                 card1.y = 65;
@@ -355,6 +369,7 @@ class Game {
                 app.stage.addChild(card2);
 
             }
+            //player 4 UI
             else {
                 var username = element.username.split('@')[0];
                 var chips = element.chips;
@@ -390,6 +405,7 @@ class Game {
 
                 }
 
+                //player 4 bubble
                 const bubble = new PIXI.Graphics();
                 bubble.beginFill(0xffcccb);
                 bubble.lineStyle(3, 0xff0000);
@@ -408,6 +424,7 @@ class Game {
                 playerchips.y = 310;
                 app.stage.addChild(playerchips);
 
+                //draw player 4 cards
                 const card1 = PIXI.Sprite.from(card_images[element.card1]);
                 card1.x = 840;
                 card1.y = 390;

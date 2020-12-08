@@ -1,4 +1,14 @@
-﻿@model Poker.Models.Game
+﻿<!--
+  Author:    Ajay Bagali, Jon England, Ryan Furukawa
+  Date:      12/7/2020
+  Course:    CS 4540, University of Utah, School of Computing
+  Copyright: CS 4540 and Ajay Bagali, Jon England, and  Ryan Furukawa - This work may not be copied for use in Academic Coursework.
+  I, Ajay Bagali,Jon England, and Ryan Furukawa  certify that I wrote this code from scratch and did not copy it in part or whole from
+  another source.  Any references used in the completion of the assignment are cited in my README file.
+  File Contents
+    Poker gameboard page
+-->
+@model Poker.Models.Game
 
 @{
     ViewData["Title"] = "Game";
@@ -14,7 +24,7 @@
     </div>
 
     <div class="game_background" id="game_background"></div>
- 
+
 </body>
 
 @section Scripts {
@@ -22,13 +32,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/5.1.5/pixi.js"></script>
     <script src="https://pixijs.io/pixi-sound/dist/pixi-sound.js"></script>
     <script type="text/javascript" src="~/js/game.js"></script>
-    <script type="text/javascript" src="~/js/button.js"></script>
     <script type="text/javascript" src="~/js/setup.js"></script>
     <script type="text/javascript" src="~/js/game_board.js"></script>
     <script type="text/javascript" src="~/js/card_images.js"></script>
 
     <script type="text/javascript">
 
+        //buttons call backend bet method to update game model
         $("#betButton").click(bet);
         function bet() {
             data = { id: @Model.ID, amount: document.getElementById("betAmount").value }
@@ -45,6 +55,7 @@
             $.post('/Games/Bet', data);
         }
 
+        //creates game board and instance
         var game = new Game();
         game.main();
 
@@ -54,6 +65,7 @@
                 .done(function (result) {
                     //new game
                     if (result.turn != -1) {
+                        //update the gameboard every second
                         game.draw_players(result.players, result.turn);
                         game.draw_pot(result.pot);
                         game.draw_river_cards(result.river1, result.river2, result.river3, result.river4, result.river5);
@@ -67,6 +79,7 @@
                 });
         }
 
+        //run worker function every 1/2 second in background
         window.onload = function () {
             setTimeout(worker, 500);
         };
