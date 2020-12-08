@@ -73,7 +73,7 @@
                         game.draw_minimum_bet(result.minimumBet);
                     }
                     if (result.turn === -2) {
-                        window.location.replace("../Denied/3");
+                        window.location.replace("../Winner/" + result.id);
                     }
                     setTimeout(worker, 3000);
                 });
